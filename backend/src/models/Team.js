@@ -1,37 +1,28 @@
+import mongoose from "mongoose";
+
 const personSchema = new mongoose.Schema({
   name: String,
-
-  email: {
-    type: String,
-    lowercase: true
-  },
-
+  email: String,
   phone: String,
-
   roll: String
 });
 
 const teamSchema = new mongoose.Schema({
-  teamName: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true
-  },
+  teamName: { type: String, unique: true },
+  college: String,
 
   leader: personSchema,
+  members: [personSchema],
 
-  members: {
-    type: [personSchema],
-    validate: v => v.length <= 3
+  payment: {
+    orderId: String,
+    paymentId: String,
+    signature: String,
+    amount: Number,
+    status: String
   },
 
-  totalCount: Number,
-
-  payment: Object,
-
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  createdAt: { type: Date, default: Date.now }
 });
+
+export default mongoose.model("Team", teamSchema);

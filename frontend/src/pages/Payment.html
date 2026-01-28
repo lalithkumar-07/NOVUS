@@ -20,6 +20,59 @@
       }
     }
   </script>
+  <script>
+    document.getElementById("payBtn").onclick = async () => {
+
+  const teamData = JSON.parse(localStorage.getItem("teamData"));
+
+  const res = await fetch(
+    "http://localhost:5000/api/payment/create-order",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ teamData })
+    }
+  );
+
+  const order = await res.json();
+
+  const options = {
+    key: "rzp_test_xxxxx",
+    amount: order.amount,
+    currency: "INR",
+    name: "NOVUS Hackathon",
+    description: "Registration Fee",
+    order_id: order.id,
+
+    handler: async function (response) {
+
+      const verify = await fetch(
+        "http://localhost:5000/api/payment/verify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...response,
+            teamData
+          })
+        }
+      );
+
+      const result = await verify.json();
+
+      if (result.success)
+        window.location.href = "Success.html";
+      else
+        alert("Payment verification failed");
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
+};
+
+  </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Animations -->
   <style>
