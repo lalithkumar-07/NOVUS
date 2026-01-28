@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOVUS Hackathon</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neon: "#0AF748",
+            darkbg: "#020F18",
+          },
+          boxShadow: {
+            glow: "0 0 35px rgba(10,247,72,0.6)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 12px rgba(10,247,72,0.7);
+    }
+  </style>
+</head>
+
+<body class="bg-darkbg text-white overflow-x-hidden">
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="fixed w-full z-50 bg-darkbg/80 backdrop-blur border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <div class="text-2xl font-bold text-neon glow-text">
+      NOVUS
+    </div>
+
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex gap-8 text-sm font-medium">
+      <a href="#home" class="hover:text-neon transition">Home</a>
+      <a href="#about" class="hover:text-neon transition">About</a>
+      <a href="#rules" class="hover:text-neon transition">Rules</a>
+      <a href="#contact" class="hover:text-neon transition">Contact</a>
+    </nav>
+
+    <!-- Register Button -->
+    <a href="#register"
+      class="hidden md:block bg-neon text-black px-6 py-2 rounded-lg font-semibold shadow-glow hover:scale-105 transition">
+      Register
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-2xl" onclick="toggleMenu()">☰</button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu"
+    class="hidden md:hidden bg-darkbg border-t border-white/10 px-6 py-6 flex flex-col gap-6">
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#rules" onclick="toggleMenu()">Rules</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="#register"
+      class="bg-neon text-black px-4 py-2 rounded-lg text-center font-semibold">
+      Register
+    </a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section id="home" class="min-h-screen flex items-center pt-32">
+
+  <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+
+    <!-- Text -->
+    <div>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold leading-tight">
+        NOVUS <span class="text-neon glow-text">Hackathon</span>
+      </h1>
+
+      <p class="mt-6 text-gray-300 max-w-xl">
+        Innovate. Build. Compete.  
+        A flagship college hackathon by NOVUS Community.
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row gap-4">
+        <a href="#register"
+          class="bg-neon text-black px-8 py-4 rounded-xl font-bold shadow-glow hover:scale-105 transition">
+          Register Your Team
+        </a>
+
+        <a href="#about"
+          class="border border-neon px-8 py-4 rounded-xl hover:bg-neon hover:text-black transition">
+          Learn More
+        </a>
+      </div>
+    </div>
+
+    <!-- Visual Glow -->
+    <div class="hidden lg:block">
+      <div
+        class="w-[350px] h-[350px] bg-neon/20 blur-[120px] rounded-full mx-auto animate-pulse">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= INFO CARDS ================= -->
+
+<section class="py-20">
+
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+    <div class="bg-white/5 backdrop-blur p-8 rounded-xl border border-white/10">
+      <h3 class="text-xl font-semibold">📅 Date</h3>
+      <p class="mt-2 text-gray-400">28 Feb</p>
+    </div>
+
+    <div class="bg-white/5 backdrop-blur p-8 rounded-xl border border-white/10">
+      <h3 class="text-xl font-semibold">👥 Team Size</h3>
+      <p class="mt-2 text-gray-400">Up to 4 Members</p>
+    </div>
+
+    <div class="bg-white/5 backdrop-blur p-8 rounded-xl border border-white/10">
+      <h3 class="text-xl font-semibold">💰 Fee</h3>
+      <p class="mt-2 text-gray-400">₹2000 / Team</p>
+    </div>
+
+    <div class="bg-white/5 backdrop-blur p-8 rounded-xl border border-white/10">
+      <h3 class="text-xl font-semibold">🏆 Prizes</h3>
+      <p class="mt-2 text-gray-400">Exciting Rewards</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="py-20 bg-white/5">
+
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-neon glow-text">
+      Why Join NOVUS?
+    </h2>
+
+    <p class="mt-6 text-gray-300">
+      Learn from mentors, build innovative projects, compete with top teams,
+      and take home amazing prizes while networking with industry experts.
+    </p>
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer id="contact" class="border-t border-white/10 py-10 text-center">
+
+  <p class="text-gray-400">
+    © 2026 NOVUS Community • Hackathon Portal
+  </p>
+
+</footer>
+
+<!-- ================= JS ================= -->
+
+<script>
+  function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("hidden");
+  }
+</script>
+
+</body>
+</html>

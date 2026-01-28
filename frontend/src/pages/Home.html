@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOVUS Community</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neon: "#0AF748",
+            darkbg: "#020F18"
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Animations -->
+  <style>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeUp {
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<style>
+  .event-card {
+  position: relative;
+  padding: 28px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.event-card:hover {
+  border-color: #0AF748;
+  box-shadow: 0 0 35px rgba(10,247,72,0.25);
+  transform: translateY(-6px);
+}
+
+.event-card h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.event-card p {
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.year-badge {
+  position: absolute;
+  top: -16px;
+  left: 20px;
+  background: #0AF748;
+  color: black;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.img-placeholder {
+  margin-top: 20px;
+  height: 160px;
+  border-radius: 14px;
+  border: 1px dashed rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}
+
+</style>
+<body class="bg-darkbg text-white min-h-screen">
+
+<!-- ================= PAGE CONTENT ================= -->
+<main class="pt-32 pb-20">
+
+  <!-- HERO SECTION -->
+  <section class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center animate-fadeUp">
+
+    <div>
+      <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+        Welcome to <span class="text-neon">NOVUS</span>
+      </h1>
+
+      <p class="mt-6 text-gray-300 max-w-xl">
+        NOVUS is a student‑driven technology community focused on innovation,
+        hackathons, learning, and collaboration.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="#events"
+          class="bg-neon text-black px-8 py-4 rounded-xl font-bold hover:scale-105 transition">
+          Explore Events
+        </a>
+
+        <a href="#about"
+          class="border border-neon px-8 py-4 rounded-xl hover:bg-neon hover:text-black transition">
+          About NOVUS
+        </a>
+      </div>
+    </div>
+
+    <div class="flex justify-center">
+      <img src="../../public/logo.png"
+        class="w-72 animate-float" />
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="max-w-6xl mx-auto px-6 mt-32 animate-fadeUp">
+    <h2 class="text-4xl font-bold text-neon mb-6">About NOVUS</h2>
+    <p class="text-gray-300 leading-relaxed">
+      NOVUS is a collaborative tech community built by students, for students.
+      We conduct hackathons, workshops, coding events, and technical talks
+      to empower innovation and real‑world problem solving.
+    </p>
+  </section>
+
+  <!-- STATS -->
+  <section class="max-w-6xl mx-auto px-6 mt-24 grid md:grid-cols-4 gap-6 animate-fadeUp">
+
+    <div class="bg-white/5 p-6 rounded-xl text-center">
+      <h3 class="text-3xl font-bold text-neon">30+</h3>
+      <p class="text-gray-400 mt-2">Community Members</p>
+    </div>
+
+    <div class="bg-white/5 p-6 rounded-xl text-center">
+      <h3 class="text-3xl font-bold text-neon">3+</h3>
+      <p class="text-gray-400 mt-2">Events Conducted</p>
+    </div>
+
+    <div class="bg-white/5 p-6 rounded-xl text-center">
+      <h3 class="text-3xl font-bold text-neon">5+</h3>
+      <p class="text-gray-400 mt-2">Hackathons</p>
+    </div>
+
+    <div class="bg-white/5 p-6 rounded-xl text-center">
+      <h3 class="text-3xl font-bold text-neon">15+</h3>
+      <p class="text-gray-400 mt-2">Partner Colleges</p>
+    </div>
+
+  </section>
+
+  <!-- ================= EVENTS SHOWCASE ================= -->
+<section id="events-showcase"
+  class="max-w-7xl mx-auto px-6 mt-40">
+
+  <h2 class="text-5xl font-bold text-neon mb-16 text-center">
+    NOVUS Event Timeline
+  </h2>
+
+  <!-- TIMELINE -->
+  <div class="relative border-l border-neon/40 pl-10 space-y-20">
+
+    <!-- EVENT CARD -->
+    <div class="event-card" onclick="openEventModal(0)">
+      <span class="year-badge">2025</span>
+      <h3>IEEE WIE 2025</h3>
+      <p>Women in Engineering conference promoting technical excellence.</p>
+      <div class="img-placeholder">Images Coming Soon</div>
+    </div>
+
+    <div class="event-card" onclick="openEventModal(1)">
+      <span class="year-badge">2025</span>
+      <h3>U25 Summit</h3>
+      <p>Leadership & innovation summit for young changemakers.</p>
+      <div class="img-placeholder">Images Coming Soon</div>
+    </div>
+
+    <div class="event-card" onclick="openEventModal(2)">
+      <span class="year-badge">2024</span>
+      <h3>Technical Quiz – KBVP</h3>
+      <p>Inter‑college quiz conducted during Kalotsavam.</p>
+      <div class="img-placeholder">Images Coming Soon</div>
+    </div>
+
+    <div class="event-card" onclick="openEventModal(3)">
+      <span class="year-badge">2024</span>
+      <h3>Kalotsavam</h3>
+      <p>Cultural & technical fest with multiple competitions.</p>
+      <div class="img-placeholder">Images Coming Soon</div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- CORE TEAM -->
+  <section class="max-w-6xl mx-auto px-6 mt-32 animate-fadeUp">
+    <h2 class="text-4xl font-bold text-neon mb-10">Core Team</h2>
+
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="bg-white/5 p-6 rounded-xl text-center">
+        <p class="font-semibold">Community Lead</p>
+        <p class="text-gray-400">NOVUS</p>
+      </div>
+      <div class="bg-white/5 p-6 rounded-xl text-center">
+        <p class="font-semibold">Tech Lead</p>
+        <p class="text-gray-400">NOVUS</p>
+      </div>
+      <div class="bg-white/5 p-6 rounded-xl text-center">
+        <p class="font-semibold">Event Manager</p>
+        <p class="text-gray-400">NOVUS</p>
+      </div>
+      <div class="bg-white/5 p-6 rounded-xl text-center">
+        <p class="font-semibold">Design Lead</p>
+        <p class="text-gray-400">NOVUS</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HACKATHON EVENT -->
+  <section id="events" class="max-w-6xl mx-auto px-6 mt-32 animate-fadeUp">
+
+    <h2 class="text-4xl font-bold text-neon mb-10">
+      Upcoming Event
+    </h2>
+
+    <div class="bg-white/5 p-10 rounded-xl border border-neon/40">
+
+      <h3 class="text-3xl font-bold mb-4">
+        NOVUS Hackathon 2026
+      </h3>
+
+      <p class="text-gray-300 mb-6">
+        A 24‑hour hackathon focused on innovation, teamwork,
+        and real‑world problem solving.
+      </p>
+
+      <a href="Register.html"
+        class="inline-block bg-neon text-black px-8 py-4 rounded-xl font-bold hover:scale-105 transition">
+        Register Here
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ================= COMPONENTS ================= -->
+<script type="module">
+  import { loadNavbar } from "../components/Navbar.js";
+  import { loadFooter } from "../components/Footer.js";
+  import { showPageLoader } from "../components/PageLoader.js";
+
+  loadNavbar();
+  loadFooter();
+
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", e => {
+      if (link.href) {
+        e.preventDefault();
+        showPageLoader();
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 500);
+      }
+    });
+  });
+</script>
+<!-- EVENT MODAL -->
+<div id="eventModal"
+  class="fixed inset-0 bg-black/80 backdrop-blur hidden z-50 flex items-center justify-center">
+
+  <div class="bg-darkbg max-w-3xl w-full p-8 rounded-xl relative">
+
+    <button onclick="closeEventModal()"
+      class="absolute top-4 right-4 text-xl">✕</button>
+
+    <h2 id="modalTitle" class="text-3xl font-bold text-neon mb-4"></h2>
+    <p id="modalDesc" class="text-gray-300 mb-6"></p>
+
+    <!-- SLIDER -->
+    <div class="relative overflow-hidden rounded-xl">
+
+      <img id="sliderImg"
+        src=""
+        class="w-full h-72 object-cover"/>
+
+      <button onclick="prevSlide()"
+        class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 px-4 py-2 rounded">‹</button>
+
+      <button onclick="nextSlide()"
+        class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 px-4 py-2 rounded">›</button>
+
+    </div>
+
+  </div>
+</div>
+<script>
+const events = [
+  {
+    title: "IEEE WIE 2025",
+    desc: "Women in Engineering conference promoting technical excellence.",
+    images: ["img1.jpg","img2.jpg"]
+  },
+  {
+    title: "U25 Summit",
+    desc: "Leadership & innovation summit for young changemakers.",
+    images: ["img1.jpg"]
+  },
+  {
+    title: "Technical Quiz – KBVP",
+    desc: "Inter‑college quiz conducted during Kalotsavam.",
+    images: []
+  },
+  {
+    title: "Kalotsavam",
+    desc: "Cultural & technical fest with competitions.",
+    images: []
+  }
+];
+
+let currentEvent = 0;
+let slideIndex = 0;
+
+function openEventModal(i) {
+  currentEvent = i;
+  slideIndex = 0;
+
+  document.getElementById("modalTitle").innerText = events[i].title;
+  document.getElementById("modalDesc").innerText = events[i].desc;
+
+  loadSlide();
+  document.getElementById("eventModal").classList.remove("hidden");
+}
+
+function closeEventModal() {
+  document.getElementById("eventModal").classList.add("hidden");
+}
+
+function loadSlide() {
+  const img = events[currentEvent].images[slideIndex];
+  document.getElementById("sliderImg").src =
+    img || "https://dummyimage.com/900x500/020f18/ffffff&text=Upload+Images";
+}
+
+function nextSlide() {
+  slideIndex =
+    (slideIndex + 1) % events[currentEvent].images.length;
+  loadSlide();
+}
+
+function prevSlide() {
+  slideIndex =
+    (slideIndex - 1 + events[currentEvent].images.length)
+    % events[currentEvent].images.length;
+  loadSlide();
+}
+</script>
+
+</body>
+</html>

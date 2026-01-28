@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOVUS — Team Registration</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            neon: "#0AF748",
+            darkbg: "#020F18"
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Animations -->
+  <style>
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-animate {
+      animation: slideIn 0.6s ease-out;
+    }
+  </style>
+</head>
+
+<body class="bg-darkbg text-white min-h-screen">
+
+<!-- ================= PAGE CONTENT ================= -->
+<main class="pt-32 pb-20 step-animate">
+
+  <!-- PROGRESS BAR -->
+  <div class="max-w-4xl mx-auto px-6 mb-10">
+    <div class="flex items-center justify-between gap-4">
+
+      <div class="flex-1 text-center">
+        <div class="h-2 rounded bg-neon"></div>
+        <p class="mt-2 text-sm text-neon">Register</p>
+      </div>
+
+      <div class="flex-1 text-center">
+        <div class="h-2 rounded bg-white/20"></div>
+        <p class="mt-2 text-sm text-gray-400">Rules</p>
+      </div>
+
+      <div class="flex-1 text-center">
+        <div class="h-2 rounded bg-white/20"></div>
+        <p class="mt-2 text-sm text-gray-400">Payment</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <section class="max-w-4xl mx-auto px-6">
+
+    <h1 class="text-4xl font-bold text-neon mb-8">
+      Team Registration
+    </h1>
+
+    <form id="regForm" class="space-y-10">
+
+      <!-- TEAM DETAILS -->
+      <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+        <h2 class="text-xl mb-4">Team Details</h2>
+
+        <input id="teamName" required
+          placeholder="Team Name"
+          class="w-full p-3 bg-black/40 rounded"/>
+
+        <input id="college"
+          placeholder="College Name"
+          class="w-full mt-4 p-3 bg-black/40 rounded"/>
+      </div>
+
+      <!-- LEADER -->
+      <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+        <h2 class="text-xl mb-4">Team Leader</h2>
+
+        <div class="grid md:grid-cols-4 gap-4">
+          <input id="leaderName" placeholder="Name"
+            class="p-3 bg-black/40 rounded"/>
+          <input id="leaderEmail" placeholder="Email"
+            class="p-3 bg-black/40 rounded"/>
+          <input id="leaderPhone" placeholder="Phone"
+            class="p-3 bg-black/40 rounded"/>
+          <input id="leaderRoll" placeholder="Roll Number"
+            class="p-3 bg-black/40 rounded"/>
+        </div>
+      </div>
+
+      <!-- MEMBERS -->
+      <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+        <h2 class="text-xl mb-4">
+          Team Members (Leader + 3 = Max 4)
+        </h2>
+
+        <div id="members" class="space-y-6"></div>
+
+        <button type="button"
+          onclick="addMember()"
+          class="mt-4 text-neon underline">
+          + Add Member
+        </button>
+      </div>
+
+      <!-- NEXT -->
+      <button type="submit"
+        class="w-full bg-neon text-black py-4 rounded-xl font-bold hover:scale-105 transition">
+        Next → Rules & Consent
+      </button>
+
+    </form>
+
+  </section>
+</main>
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+  let memberCount = 0;
+  const MAX_MEMBERS = 3;
+
+  function addMember() {
+    if (memberCount >= MAX_MEMBERS) {
+      alert("Only 4 members total including leader are allowed.");
+      return;
+    }
+
+    memberCount++;
+
+    const wrapper = document.createElement("div");
+    wrapper.className =
+      "bg-black/40 p-4 rounded-lg border border-white/10 member-block";
+
+    wrapper.innerHTML = `
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-semibold text-neon">Member ${memberCount}</h3>
+        <button type="button"
+          class="text-red-400 text-sm underline"
+          onclick="removeMember(this)">
+          Remove
+        </button>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-4">
+        <input required placeholder="Name" class="p-3 bg-black/40 rounded"/>
+        <input required placeholder="Email" class="p-3 bg-black/40 rounded"/>
+        <input required placeholder="Phone" class="p-3 bg-black/40 rounded"/>
+        <input required placeholder="Roll Number" class="p-3 bg-black/40 rounded"/>
+      </div>
+    `;
+
+    document.getElementById("members").appendChild(wrapper);
+  }
+
+  function removeMember(btn) {
+    btn.closest(".member-block").remove();
+    memberCount--;
+
+    document.querySelectorAll(".member-block h3")
+      .forEach((h, i) => h.innerText = `Member ${i + 1}`);
+  }
+
+  function isAllowedDomain(email) {
+    return email.endsWith("@gmail.com") || email.endsWith("@outlook.com");
+  }
+
+  function isValidPhone(phone) {
+    return /^[0-9]{10,15}$/.test(phone.replace("+", ""));
+  }
+
+  document.getElementById("regForm").addEventListener("submit", e => {
+    e.preventDefault();
+
+    if (!isAllowedDomain(leaderEmail.value))
+      return alert("Use Gmail or Outlook email.");
+
+    if (!isValidPhone(leaderPhone.value))
+      return alert("Invalid phone number.");
+
+    const members = [];
+
+    document.querySelectorAll(".member-block").forEach(row => {
+      const inputs = row.querySelectorAll("input");
+      members.push({
+        name: inputs[0].value,
+        email: inputs[1].value,
+        phone: inputs[2].value,
+        roll: inputs[3].value
+      });
+    });
+
+    const data = {
+      teamName: teamName.value.trim(),
+      college: college.value.trim(),
+      leader: {
+        name: leaderName.value,
+        email: leaderEmail.value,
+        phone: leaderPhone.value,
+        roll: leaderRoll.value
+      },
+      members
+    };
+
+    localStorage.setItem("teamData", JSON.stringify(data));
+    window.location.href = "Rules.html";
+  });
+</script>
+
+<!-- COMPONENTS -->
+<script type="module">
+  import { loadNavbar } from "../components/Navbar.js";
+  import { loadFooter } from "../components/Footer.js";
+  import { showPageLoader } from "../components/PageLoader.js";
+
+  loadNavbar();
+  loadFooter();
+
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", e => {
+      if (link.href) {
+        e.preventDefault();
+        showPageLoader();
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 500);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

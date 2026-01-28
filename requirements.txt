@@ -1,0 +1,3 @@
+npm install express mongoose dotenv cors razorpay helmet express-rate-limit joi uuid axios morgan
+
+npm install --save-dev nodemon

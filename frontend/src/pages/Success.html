@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Registration Successful — NOVUS</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        neon: "#0AF748",
+        darkbg: "#020F18"
+      }
+    }
+  }
+}
+</script>
+</head>
+<style>
+  @keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 2s linear infinite;
+}
+
+</style>
+<style>
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.step-animate {
+  animation: slideIn 0.6s ease-out;
+}
+</style>
+
+<script type="module">
+  import { loadNavbar } from "../components/Navbar.js";
+  import { loadFooter } from "../components/Footer.js";
+
+  loadNavbar();
+  loadFooter();
+</script>
+
+<body class="bg-darkbg text-white flex items-center justify-center min-h-screen">
+
+<section class="bg-white/5 p-10 rounded-xl text-center max-w-lg">
+
+<h1 class="text-4xl font-bold text-neon">🎉 Registered Successfully!</h1>
+
+<p class="mt-4 text-gray-300">
+Your team has been officially registered for the NOVUS Hackathon.
+Payment has been verified.
+</p>
+
+<div class="mt-6 text-sm text-gray-400">
+A confirmation email will be sent shortly.
+</div>
+
+<a href="Home.html"
+ class="inline-block mt-8 bg-neon text-black px-8 py-3 rounded-xl font-bold">
+Back to Home
+</a>
+
+</section>
+<script type="module">
+  import { showPageLoader } from "../components/PageLoader.js";
+
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", e => {
+      if (link.href) {
+        e.preventDefault();
+        showPageLoader();
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 600);
+      }
+    });
+  });
+</script>
+<script type="module">
+  import { loadNavbar } from "../components/Navbar.js";
+  loadNavbar();
+</script>
+<section class="step-animate">
+  <!-- existing page content -->
+</section>
+
+<canvas id="confetti"></canvas>
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const pieces = Array.from({ length: 150 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: Math.random() * 6 + 2,
+  d: Math.random() * 5 + 1
+}));
+
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = "#0AF748";
+    ctx.fill();
+    p.y += p.d;
+    if (p.y > canvas.height) p.y = 0;
+  });
+}
+
+setInterval(draw, 30);
+</script>
+
+</body>
+</html>
