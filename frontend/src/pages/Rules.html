@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>NOVUS — Rules & Consent</title>
 
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
@@ -20,180 +21,210 @@ tailwind.config = {
   }
 }
 </script>
-</head>
-<style>
-  @keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
-.animate-spin-slow {
-  animation: spinSlow 2s linear infinite;
-}
-
-</style>
 <style>
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from {opacity:0; transform:translateY(25px);}
+  to {opacity:1; transform:none;}
 }
-
 .step-animate {
-  animation: slideIn 0.6s ease-out;
+  animation:.6s slideIn ease-out;
 }
 </style>
+</head>
 
 <body class="bg-darkbg text-white min-h-screen">
 
-<!-- HEADER -->
-<header class="border-b border-white/10 p-4">
-  <div class="max-w-6xl mx-auto flex justify-between">
-    <span class="text-neon font-bold text-xl">NOVUS</span>
-    <a href="Register.html" class="hover:text-neon">Back</a>
+<!-- ================= NAVBAR ================= -->
+
+<header
+ class="fixed top-0 left-0 w-full bg-darkbg/90 backdrop-blur
+ border-b border-white/10 z-50">
+
+<div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+
+  <!-- LOGO -->
+  <div class="flex items-center gap-3">
+    <img src="../../public/logo.png"
+      class="w-10 h-10 object-contain"/>
+    <span class="font-bold text-xl text-neon">NOVUS</span>
   </div>
+
+  <!-- BACK -->
+  <button id="navBack"
+    class="text-sm underline hover:text-neon">
+    ← Back 
+  </button>
+
+</div>
 </header>
 
-<section class="max-w-4xl mx-auto p-6">
+<main class="pt-32 step-animate">
 
-<h1 class="text-4xl font-bold text-neon mb-6">
+<!-- ================= PROGRESS ================= -->
+
+<div class="max-w-4xl mx-auto px-6 mb-12">
+
+<div class="flex items-center justify-between">
+
+  <div class="flex-1 text-center">
+    <div class="h-2 rounded bg-neon"></div>
+    <p class="mt-2 text-sm text-neon">Register</p>
+  </div>
+
+  <div class="flex-1 text-center">
+    <div id="ruleBar" class="h-2 rounded bg-white/20"></div>
+    <p id="ruleText" class="mt-2 text-sm text-gray-400">Rules</p>
+  </div>
+
+  <div class="flex-1 text-center">
+    <div class="h-2 rounded bg-white/20"></div>
+    <p class="mt-2 text-sm text-gray-400">Payment</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ================= RULES ================= -->
+
+<section class="max-w-4xl mx-auto px-6 pb-24">
+
+<h1 class="text-4xl font-bold text-neon mb-8">
 Rules & Regulations
 </h1>
 
-<!-- RULES BOX -->
+<!-- RULE BOX -->
 <div id="rulesBox"
- class="bg-black/40 p-6 rounded-xl h-96 overflow-y-scroll border border-white/10">
+ class="bg-black/40 p-6 rounded-xl
+ h-[420px] overflow-y-scroll
+ border border-white/10">
 
-<h2 class="text-xl font-semibold mb-4">Hackathon Rules</h2>
+<h2 class="text-xl font-semibold mb-4">
+Hackathon Discipline & Conduct
+</h2>
 
-<ul class="space-y-3 text-gray-300">
-  <li>• Team size must not exceed 4 members.</li>
-  <li>• Registration fee ₹2000 per team (non‑refundable).</li>
-  <li>• All members must be students.</li>
-  <li>• Plagiarism or copied projects lead to disqualification.</li>
-  <li>• Teams must bring valid college ID cards.</li>
-  <li>• Decision of judges is final.</li>
-  <li>• Payment once made cannot be reversed.</li>
-  <li>• NOVUS committee reserves all rights.</li>
-  <li>• Internet usage subject to rules.</li>
-  <li>• Respect fellow participants.</li>
+<ul class="space-y-3 text-gray-300 text-sm leading-relaxed">
+
+<li>• Team size must not exceed 4 members.</li>
+<li>• Registration fee ₹2000 per team (non‑refundable).</li>
+<li>• All members must be students.</li>
+<li>• Plagiarism results in disqualification.</li>
+<li>• College ID is mandatory.</li>
+<li>• Judges’ decision is final.</li>
+
+<hr class="border-white/10 my-4"/>
+
+<li>• Maintain silence and discipline.</li>
+<li>• Do not disturb other teams.</li>
+<li>• Dispose waste properly.</li>
+<li>• Handle infrastructure carefully.</li>
+<li>• Damages will be recovered.</li>
+<li>• Follow organizer instructions.</li>
+<li>• Misbehavior causes removal.</li>
+<li>• Smoking/alcohol prohibited.</li>
+<li>• No roaming unnecessarily.</li>
+<li>• Attend all reviews.</li>
+<li>• Phones on silent.</li>
+<li>• Eat only in allowed zones.</li>
+<li>• Registered participants only.</li>
+
+<li class="font-semibold text-red-400">
+• Violations may cause disqualification.
+</li>
+
 </ul>
+
+<p class="mt-6 text-xs text-gray-400">
+Issued with approval of competent authority.
+</p>
 
 </div>
 
-<!-- CONSENT -->
-<div class="mt-6 bg-white/5 p-6 rounded-xl flex gap-4 items-start">
+<!-- ================= CONSENT ================= -->
 
-<input type="checkbox" id="agree" disabled class="mt-1"/>
+<div class="mt-8 bg-white/5 p-6 rounded-xl flex gap-4">
 
-<label>
-I have read all the rules and regulations and agree to them.
+<input type="checkbox"
+ id="agree"
+ disabled
+ class="mt-1 scale-125"/>
+
+<label class="text-sm">
+I have read all rules and agree to them.
+Fee is non‑refundable.
 </label>
 
 </div>
 
-<!-- CONTINUE -->
+<!-- ================= CONTINUE ================= -->
+
 <button id="continueBtn"
  disabled
- class="w-full mt-6 bg-neon/40 text-black py-4 rounded-xl font-bold cursor-not-allowed">
+ class="mt-8 w-full bg-neon/40 text-black
+ py-4 rounded-xl font-bold cursor-not-allowed">
 Continue to Payment
 </button>
 
 </section>
+</main>
+
+<!-- ================= JS ================= -->
 
 <script>
 
-// Enable checkbox only after scrolling
+/* BACK */
+document.getElementById("navBack").onclick = () => {
+  window.location.href = "Register.html";
+};
+
+/* RULE SCROLL ENABLE */
+
 const rulesBox = document.getElementById("rulesBox");
 const agree = document.getElementById("agree");
 const btn = document.getElementById("continueBtn");
 
 rulesBox.addEventListener("scroll", () => {
-  if (rulesBox.scrollTop + rulesBox.clientHeight >= rulesBox.scrollHeight - 20) {
+  if (
+    rulesBox.scrollTop + rulesBox.clientHeight
+    >= rulesBox.scrollHeight - 15
+  ) {
     agree.disabled = false;
   }
 });
 
+/* CHECKBOX */
+
 agree.addEventListener("change", () => {
+
   if (agree.checked) {
+
     btn.disabled = false;
     btn.classList.remove("bg-neon/40","cursor-not-allowed");
     btn.classList.add("bg-neon");
+
+    document.getElementById("ruleBar")
+      .classList.replace("bg-white/20","bg-neon");
+
+    document.getElementById("ruleText")
+      .classList.replace("text-gray-400","text-neon");
   }
+
 });
 
-btn.addEventListener("click", () => {
+/* CONTINUE */
 
-  const tempData = localStorage.getItem("teamData");
+btn.onclick = () => {
 
-  if (!tempData) {
-    alert("Session expired. Please register again.");
-    window.location.href = "Register.html";
+  if (!localStorage.getItem("teamData")) {
+    alert("Session expired — register again.");
+    location.href = "Register.html";
     return;
   }
 
-  window.location.href = "Payment.html";
-});
+  location.href = "Payment.html";
+};
 
 </script>
-<script type="module">
-  import { loadNavbar } from "../components/Navbar.js";
-  import { loadFooter } from "../components/Footer.js";
-
-  loadNavbar();
-  loadFooter();
-</script>
-<script type="module">
-  import { showPageLoader } from "../components/PageLoader.js";
-
-  document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", e => {
-      if (link.href) {
-        e.preventDefault();
-        showPageLoader();
-        setTimeout(() => {
-          window.location.href = link.href;
-        }, 600);
-      }
-    });
-  });
-</script>
-<script type="module">
-  import { loadNavbar } from "../components/Navbar.js";
-  loadNavbar();
-</script>
-<script>
-  document.getElementById("stepRules").classList.replace("bg-white/20","bg-neon");
-
-</script>
-<section class="step-animate">
-  <!-- existing page content -->
-</section>
-<div class="max-w-4xl mx-auto px-6 pt-28">
-  <div class="flex items-center justify-between mb-8">
-
-    <div class="flex-1 text-center">
-      <div class="h-2 rounded bg-neon"></div>
-      <p class="mt-2 text-sm text-neon">Register</p>
-    </div>
-
-    <div class="flex-1 text-center">
-      <div class="h-2 rounded bg-white/20" id="stepRules"></div>
-      <p class="mt-2 text-sm text-gray-400">Rules</p>
-    </div>
-
-    <div class="flex-1 text-center">
-      <div class="h-2 rounded bg-white/20" id="stepPayment"></div>
-      <p class="mt-2 text-sm text-gray-400">Payment</p>
-    </div>
-
-  </div>
-</div>
 
 </body>
 </html>

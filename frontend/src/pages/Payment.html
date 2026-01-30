@@ -1,221 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NOVUS — Payment</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<title>NOVUS — Payment</title>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            neon: "#0AF748",
-            darkbg: "#020F18"
-          }
-        }
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        neon: "#0AF748",
+        darkbg: "#020F18"
       }
     }
-  </script>
-  <script>
-    document.getElementById("payBtn").onclick = async () => {
+  }
+}
+</script>
 
-  const teamData = JSON.parse(localStorage.getItem("teamData"));
-
-  const res = await fetch(
-    "http://localhost:5000/api/payment/create-order",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ teamData })
-    }
-  );
-
-  const order = await res.json();
-
-  const options = {
-    key: "rzp_test_xxxxx",
-    amount: order.amount,
-    currency: "INR",
-    name: "NOVUS Hackathon",
-    description: "Registration Fee",
-    order_id: order.id,
-
-    handler: async function (response) {
-
-      const verify = await fetch(
-        "http://localhost:5000/api/payment/verify",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...response,
-            teamData
-          })
-        }
-      );
-
-      const result = await verify.json();
-
-      if (result.success)
-        window.location.href = "Success.html";
-      else
-        alert("Payment verification failed");
-    }
-  };
-
-  const rzp = new Razorpay(options);
-  rzp.open();
-};
-
-  </script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-  <!-- Animations -->
-  <style>
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .step-animate {
-      animation: slideIn 0.6s ease-out;
-    }
-  </style>
+<style>
+@keyframes slideIn {
+  from {opacity:0; transform:translateY(25px);}
+  to {opacity:1; transform:none;}
+}
+.step-animate {
+  animation:.6s slideIn ease-out;
+}
+</style>
 </head>
 
 <body class="bg-darkbg text-white min-h-screen">
 
-<!-- ================= PAGE CONTENT ================= -->
-<main class="pt-32 pb-20 step-animate">
+<!-- ================= NAVBAR ================= -->
 
-  <!-- PROGRESS BAR -->
-  <div class="max-w-4xl mx-auto px-6 mb-10">
-    <div class="flex items-center justify-between gap-4">
+<header
+ class="fixed top-0 left-0 w-full bg-darkbg/90 backdrop-blur
+ border-b border-white/10 z-50">
 
-      <div class="flex-1 text-center">
-        <div class="h-2 rounded bg-neon"></div>
-        <p class="mt-2 text-sm text-neon">Register</p>
-      </div>
+<div class="max-w-6xl mx-auto px-6 py-4
+ flex justify-between items-center">
 
-      <div class="flex-1 text-center">
-        <div class="h-2 rounded bg-neon"></div>
-        <p class="mt-2 text-sm text-neon">Rules</p>
-      </div>
-
-      <div class="flex-1 text-center">
-        <div class="h-2 rounded bg-neon"></div>
-        <p class="mt-2 text-sm text-neon">Payment</p>
-      </div>
-
-    </div>
+  <!-- LOGO -->
+  <div class="flex items-center gap-3">
+    <img src="../../public/logo.png"
+      class="w-10 h-10 object-contain"/>
+    <span class="font-bold text-xl text-neon">NOVUS</span>
   </div>
 
-  <!-- PAYMENT CARD -->
-  <section class="max-w-lg mx-auto px-6">
+  <!-- BACK -->
+  <button id="navBack"
+    class="text-sm underline hover:text-neon">
+    ← Back
+  </button>
 
-    <div class="bg-white/5 backdrop-blur p-8 rounded-xl border border-white/10">
+</div>
+</header>
 
-      <h1 class="text-3xl font-bold text-neon mb-3 text-center">
-        Secure Payment
-      </h1>
+<main class="pt-32 step-animate">
 
-      <p class="text-gray-300 mb-6 text-center">
-        Complete the payment to officially register your team for NOVUS Hackathon.
-      </p>
+<!-- ================= PROGRESS ================= -->
 
-      <!-- TEAM SUMMARY -->
-      <div class="bg-black/40 rounded-lg p-5 mb-6">
-        <h2 class="font-semibold mb-3">Team Summary</h2>
+<div class="max-w-4xl mx-auto px-6 mb-12">
 
-        <div id="summary" class="space-y-1 text-sm text-gray-300">
-          Loading team details...
-        </div>
+<div class="flex items-center justify-between">
 
-        <hr class="my-4 border-white/10"/>
+  <div class="flex-1 text-center">
+    <div class="h-2 rounded bg-neon"></div>
+    <p class="mt-2 text-sm text-neon">Register</p>
+  </div>
 
-        <div class="flex justify-between font-semibold">
-          <span>Registration Fee</span>
-          <span>₹2000</span>
-        </div>
-      </div>
+  <div class="flex-1 text-center">
+    <div class="h-2 rounded bg-neon"></div>
+    <p class="mt-2 text-sm text-neon">Rules</p>
+  </div>
 
-      <!-- STATUS -->
-      <div id="statusBox" class="mb-6 hidden text-center">
-        <p class="text-sm text-gray-400 mb-3">Processing payment…</p>
-        <div class="animate-spin h-8 w-8 border-4 border-neon border-t-transparent rounded-full mx-auto"></div>
-      </div>
+  <div class="flex-1 text-center">
+    <div id="payBar" class="h-2 rounded bg-neon"></div>
+    <p id="payText" class="mt-2 text-sm text-neon">Payment</p>
+  </div>
 
-      <!-- PAY BUTTON -->
-      <button
-        id="payBtn"
-        class="w-full bg-neon text-black py-4 rounded-xl font-bold hover:scale-105 transition">
-        Pay ₹2000 Now
-      </button>
+</div>
+</div>
 
-      <!-- CANCEL -->
-      <a href="Register.html"
-        class="block mt-4 text-center text-gray-400 underline">
-        Cancel & Go Back
-      </a>
+<!-- ================= PAYMENT CARD ================= -->
 
-    </div>
+<section class="max-w-lg mx-auto px-6 pb-24">
 
-  </section>
+<div class="bg-white/5 p-8 rounded-xl border border-white/10">
+
+<h1 class="text-3xl font-bold text-neon mb-3 text-center">
+Secure Payment
+</h1>
+
+<p class="text-gray-300 mb-6 text-center">
+Review your team details and proceed.
+</p>
+
+<!-- SUMMARY -->
+
+<div class="bg-black/40 rounded-lg p-5 mb-6">
+
+<h2 class="font-semibold mb-3">Team Summary</h2>
+
+<div id="summary"
+ class="space-y-1 text-sm text-gray-300">
+Loading…
+</div>
+
+<hr class="my-4 border-white/10"/>
+
+<div class="flex justify-between font-semibold">
+<span>Registration Fee</span>
+<span>₹2000</span>
+</div>
+
+</div>
+
+<!-- STATUS -->
+
+<div id="statusBox"
+ class="hidden mb-6 text-center">
+
+<p class="text-sm text-gray-400 mb-3">
+Redirecting…
+</p>
+
+<div
+ class="animate-spin h-8 w-8 border-4
+ border-neon border-t-transparent
+ rounded-full mx-auto">
+</div>
+
+</div>
+
+<!-- PAY -->
+
+<button id="payBtn"
+ class="w-full bg-neon text-black py-4
+ rounded-xl font-bold hover:scale-105 transition">
+Proceed to Payment
+</button>
+
+</div>
+</section>
+
 </main>
 
-<!-- ================= SCRIPTS ================= -->
+<!-- ================= JS ================= -->
 
 <script>
-  // Load team data
-  const teamData = JSON.parse(localStorage.getItem("teamData"));
 
-  if (!teamData) {
-    alert("Session expired. Please register again.");
-    window.location.href = "Register.html";
-  }
+/* BACK */
+document.getElementById("navBack").onclick = () => {
+  location.href = "Rules.html";
+};
 
-  document.getElementById("summary").innerHTML = `
-    <p><strong>Team:</strong> ${teamData.teamName}</p>
-    <p><strong>College:</strong> ${teamData.college}</p>
-    <p><strong>Leader:</strong> ${teamData.leader.name}</p>
-    <p><strong>Email:</strong> ${teamData.leader.email}</p>
-  `;
+/* LOAD TEAM */
 
-  document.getElementById("payBtn").addEventListener("click", () => {
-    document.getElementById("statusBox").classList.remove("hidden");
-    document.getElementById("payBtn").disabled = true;
+const teamData =
+ JSON.parse(localStorage.getItem("teamData"));
 
-    // TEMP DEMO REDIRECT
-    setTimeout(() => {
-      window.location.href = "Success.html";
-    }, 2000);
-  });
-</script>
+if (!teamData) {
+  alert("Session expired — register again.");
+  location.href = "Register.html";
+}
 
-<!-- COMPONENTS -->
-<script type="module">
-  import { loadNavbar } from "../components/Navbar.js";
-  import { loadFooter } from "../components/Footer.js";
-  import { showPageLoader } from "../components/PageLoader.js";
+document.getElementById("summary").innerHTML = `
+<p><strong>Team:</strong> ${teamData.teamName}</p>
+<p><strong>College:</strong> ${teamData.college}</p>
+<p><strong>Leader:</strong> ${teamData.leader.name}</p>
+<p><strong>Email:</strong> ${teamData.leader.email}</p>
+`;
 
-  loadNavbar();
-  loadFooter();
+/* DEMO PAY → SUCCESS */
 
-  // Page transition loader
-  document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", e => {
-      if (link.href) {
-        e.preventDefault();
-        showPageLoader();
-        setTimeout(() => {
-          window.location.href = link.href;
-        }, 500);
-      }
-    });
-  });
+document.getElementById("payBtn").onclick = () => {
+
+  document.getElementById("statusBox")
+    .classList.remove("hidden");
+
+  document.getElementById("payBtn").disabled = true;
+
+  setTimeout(() => {
+    location.href = "Success.html";
+  }, 1500);
+
+};
+
 </script>
 
 </body>

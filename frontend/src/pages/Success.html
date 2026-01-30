@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Registration Successful — NOVUS</title>
+<title>NOVUS — Registration Successful</title>
 
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
@@ -20,114 +21,94 @@ tailwind.config = {
   }
 }
 </script>
-</head>
-<style>
-  @keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
-.animate-spin-slow {
-  animation: spinSlow 2s linear infinite;
-}
-
-</style>
 <style>
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity:0; transform:translateY(25px); }
+  to { opacity:1; transform:none; }
 }
-
 .step-animate {
-  animation: slideIn 0.6s ease-out;
+  animation:.6s slideIn ease-out;
 }
 </style>
+</head>
 
-<script type="module">
-  import { loadNavbar } from "../components/Navbar.js";
-  import { loadFooter } from "../components/Footer.js";
+<body class="bg-darkbg text-white min-h-screen">
 
-  loadNavbar();
-  loadFooter();
-</script>
+<!-- ================= NAVBAR ================= -->
 
-<body class="bg-darkbg text-white flex items-center justify-center min-h-screen">
+<header
+ class="fixed top-0 left-0 w-full bg-darkbg/90 backdrop-blur
+ border-b border-white/10 z-50">
 
-<section class="bg-white/5 p-10 rounded-xl text-center max-w-lg">
+<div class="max-w-6xl mx-auto px-6 py-4
+ flex justify-between items-center">
 
-<h1 class="text-4xl font-bold text-neon">🎉 Registered Successfully!</h1>
+  <!-- LOGO -->
+  <div class="flex items-center gap-3">
+    <img
+      src="../../public/logo.png"
+      alt="NOVUS Logo"
+      class="w-10 h-10 object-contain"/>
+    <span class="font-bold text-xl text-neon">
+      NOVUS
+    </span>
+  </div>
 
-<p class="mt-4 text-gray-300">
-Your team has been officially registered for the NOVUS Hackathon.
-Payment has been verified.
+  <!-- HOME -->
+  <button id="navHome"
+    class="text-sm underline hover:text-neon">
+    Home
+  </button>
+
+</div>
+</header>
+
+<!-- ================= PAGE ================= -->
+
+<main class="pt-32 step-animate">
+
+<section class="max-w-lg mx-auto px-6 pb-32">
+
+<div
+ class="bg-white/5 p-10 rounded-xl
+ border border-white/10
+ text-center">
+
+<h1 class="text-4xl font-bold text-neon">
+Registration Successful 🎉
+</h1>
+
+<p class="mt-5 text-gray-300">
+Your team has been officially registered for the
+<b>NOVUS Hackathon</b>.
 </p>
 
-<div class="mt-6 text-sm text-gray-400">
+<p class="mt-2 text-sm text-gray-400">
+Payment verified successfully.
 A confirmation email will be sent shortly.
-</div>
+</p>
 
 <a href="Home.html"
- class="inline-block mt-8 bg-neon text-black px-8 py-3 rounded-xl font-bold">
-Back to Home
+ class="inline-block mt-10
+ bg-neon text-black px-10 py-4
+ rounded-xl font-bold hover:scale-105 transition">
+
+Go to Home
+
 </a>
 
-</section>
-<script type="module">
-  import { showPageLoader } from "../components/PageLoader.js";
-
-  document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", e => {
-      if (link.href) {
-        e.preventDefault();
-        showPageLoader();
-        setTimeout(() => {
-          window.location.href = link.href;
-        }, 600);
-      }
-    });
-  });
-</script>
-<script type="module">
-  import { loadNavbar } from "../components/Navbar.js";
-  loadNavbar();
-</script>
-<section class="step-animate">
-  <!-- existing page content -->
+</div>
 </section>
 
-<canvas id="confetti"></canvas>
+</main>
+
+<!-- ================= JS ================= -->
+
 <script>
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const pieces = Array.from({ length: 150 }, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  r: Math.random() * 6 + 2,
-  d: Math.random() * 5 + 1
-}));
-
-function draw() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  pieces.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = "#0AF748";
-    ctx.fill();
-    p.y += p.d;
-    if (p.y > canvas.height) p.y = 0;
-  });
-}
-
-setInterval(draw, 30);
+document.getElementById("navHome").onclick = () => {
+  window.location.href = "Home.html";
+};
 </script>
 
 </body>
