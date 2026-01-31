@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>NOVUS — UPI Payment Confirmation</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        neon: "#0AF748",
+        darkbg: "#020F18"
+      }
+    }
+  }
+}
+</script>
+
+<style>
+@keyframes slideIn {
+  from {opacity:0; transform:translateY(25px);}
+  to {opacity:1; transform:none;}
+}
+.step-animate {
+  animation:.6s slideIn ease-out;
+}
+.required::after {
+  content:" *";
+  color:#ff4d4d;
+}
+</style>
+</head>
+
+<body class="bg-darkbg text-white min-h-screen">
+
+<!-- ================= NAVBAR ================= -->
+
+<header
+ class="fixed top-0 left-0 w-full bg-darkbg/90 backdrop-blur
+ border-b border-white/10 z-50">
+
+<div class="max-w-6xl mx-auto px-6 py-4
+ flex justify-between items-center">
+
+  <div class="flex items-center gap-3">
+    <img src="../../public/logo.png"
+      class="w-10 h-10"/>
+    <span class="font-bold text-xl text-neon">
+      NOVUS
+    </span>
+  </div>
+
+  <button id="backBtn"
+    class="text-sm underline hover:text-neon">
+    ← Back
+  </button>
+
+</div>
+</header>
+
+<!-- ================= PAGE ================= -->
+
+<main class="pt-32 step-animate">
+
+<section class="max-w-5xl mx-auto px-6 pb-24">
+
+<h1 class="text-4xl font-bold text-neon mb-10 text-center">
+UPI Payment Confirmation
+</h1>
+
+<div class="grid md:grid-cols-2 gap-10">
+
+<!-- QR SIDE -->
+
+<div class="bg-white/5 p-8 rounded-xl text-center">
+
+  <h3 class="text-lg font-semibold mb-4">
+    Scan & Pay (BharatPe)
+  </h3>
+
+  <img
+    src="http://localhost:5000/uploads/qr.png"
+    class="mx-auto w-64 rounded-xl border"/>
+
+  <p class="text-xs text-gray-400 mt-4">
+    Pay ₹2000 and submit the details.
+  </p>
+
+</div>
+
+<!-- FORM SIDE -->
+
+<div class="bg-white/5 p-8 rounded-xl">
+
+<form id="upiForm" class="space-y-6">
+
+  <div>
+    <label class="required block mb-1 text-sm">
+      Your UPI ID
+    </label>
+    <input
+      id="upiId"
+      placeholder="example@upi"
+      class="w-full p-3 rounded bg-black/50"/>
+    <p id="upiErr" class="text-red-400 text-xs hidden">
+      Enter valid UPI ID
+    </p>
+  </div>
+
+  <div>
+    <label class="required block mb-1 text-sm">
+      Transaction ID
+    </label>
+    <input
+      id="txnId"
+      placeholder="12–23 character UTR"
+      class="w-full p-3 rounded bg-black/50"/>
+    <p id="txnErr" class="text-red-400 text-xs hidden">
+      Invalid transaction ID length
+    </p>
+  </div>
+
+  <button
+    type="submit"
+    class="w-full bg-neon text-black py-4 rounded-xl
+    font-bold hover:scale-105 transition">
+    Submit 
+  </button>
+
+</form>
+
+</div>
+
+</div>
+</section>
+
+</main>
+
+<!-- ================= JS ================= -->
+
+<script>
+
+/* BACK */
+
+const backBtn = document.getElementById("backBtn");
+
+if (backBtn) {
+  backBtn.onclick = () => {
+    window.location.href = "Payment.html";
+  };
+}
+
+
+/* VALIDATION */
+
+const upiRegex =
+ /^[\w.-]+@[a-zA-Z]{2,}$/;
+
+const txnRegex =
+ /^[A-Za-z0-9]{12,23}$/;
+
+document.getElementById("upiForm")
+.addEventListener("submit", async e => {
+
+  e.preventDefault();
+
+  const upi =
+    document.getElementById("upiId").value.trim();
+
+  const txn =
+    document.getElementById("txnId").value.trim();
+
+  let valid = true;
+
+  if (!upiRegex.test(upi)) {
+    upiErr.classList.remove("hidden");
+    valid = false;
+  } else upiErr.classList.add("hidden");
+
+  if (!txnRegex.test(txn)) {
+    txnErr.classList.remove("hidden");
+    valid = false;
+  } else txnErr.classList.add("hidden");
+
+  if (!valid) return;
+
+  const teamData =
+    JSON.parse(localStorage.getItem("teamData"));
+
+  if (!teamData)
+    return alert("Session expired");
+
+  const res = await fetch(
+    "http://localhost:5000/api/payment/submit",
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        ...teamData,
+        upiId: upi,
+        transactionId: txn
+      })
+    }
+  );
+
+  const data = await res.json();
+
+  if (data.success) {
+
+    localStorage.removeItem("teamData");
+    location.href = "Success.html";
+
+  } else {
+
+    alert(data.msg || "Submission failed");
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

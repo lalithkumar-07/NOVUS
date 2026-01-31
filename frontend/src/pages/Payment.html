@@ -169,24 +169,31 @@ if (!teamData) {
   location.href = "Register.html";
 }
 
-document.getElementById("summary").innerHTML = `
-<p><strong>Team:</strong> ${teamData.teamName}</p>
-<p><strong>College:</strong> ${teamData.college}</p>
-<p><strong>Leader:</strong> ${teamData.leader.name}</p>
-<p><strong>Email:</strong> ${teamData.leader.email}</p>
-`;
+const summaryEl = document.getElementById("summary");
+
+if (summaryEl && teamData) {
+  summaryEl.innerHTML = `
+    <p><strong>Team:</strong> ${teamData.teamName}</p>
+    <p><strong>College:</strong> ${teamData.college}</p>
+    <p><strong>Leader:</strong> ${teamData.leader.name}</p>
+    <p><strong>Email:</strong> ${teamData.leader.email}</p>
+  `;
+}
+
 
 /* DEMO PAY → SUCCESS */
 
 document.getElementById("payBtn").onclick = () => {
 
+  const btn = document.getElementById("payBtn");
+
+  btn.disabled = true;
+
   document.getElementById("statusBox")
     .classList.remove("hidden");
 
-  document.getElementById("payBtn").disabled = true;
-
   setTimeout(() => {
-    location.href = "Success.html";
+    location.href = "upi-payment.html";
   }, 1500);
 
 };
