@@ -2,24 +2,30 @@ import Team from "../models/Team.js";
 
 export const submitPayment = async (req, res) => {
   try {
-
-    // ✅ ID must come from URL params
     const teamId = req.params.teamId;
 
-    console.log("TEAM ID FROM URL:", teamId);
+    console.log("PAYMENT FOR TEAM:", teamId);
 
     const { upiId, transactionId, method } = req.body;
 
+    // validation
     if (!upiId || !transactionId) {
       return res.status(400).json({
-        message: "UPI ID and Transaction ID required"
+        message: "UPI ID and Transaction ID required",
       });
     }
 
     const team = await Team.findById(teamId);
 
     if (!team) {
-      return res.status(404).json({ message: "Team not found" });
+      return res.status(404).json({
+        message: "Team not found",
+      });
+    }
+
+    // 🔥 ensure payment object exists
+    if (!team.payment) {
+      team.payment = {};
     }
 
     team.payment.upiId = upiId;
@@ -30,15 +36,20 @@ export const submitPayment = async (req, res) => {
 
     await team.save();
 
-    res.json({
+    console.log("PAYMENT SAVED FOR:", team._id);
+
+    res.status(200).json({
       message: "Payment submitted successfully",
-      payment: team.payment
+      teamId: team._id,
+      payment: team.payment,
     });
 
   } catch (err) {
-    console.error("PAYMENT ERROR:", err);
+    console.error("PAYMENT ERROR STACK:", err);
+
     res.status(500).json({
-      message: "Payment submission failed"
+      message: "Payment submission failed",
+      error: err.message,
     });
   }
 };

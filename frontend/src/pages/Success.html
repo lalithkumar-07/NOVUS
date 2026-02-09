@@ -4,9 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>NOVUS — Registration Successful</title>
+<title>NOVUS — Payment Submitted</title>
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
@@ -55,7 +54,6 @@ tailwind.config = {
     </span>
   </div>
 
-  <!-- HOME -->
   <button id="navHome"
     class="text-sm underline hover:text-neon">
     Home
@@ -75,28 +73,20 @@ tailwind.config = {
  border border-white/10
  text-center">
 
-<h1 class="text-4xl font-bold text-neon">
-Registration Successful 🎉
+<h1 id="statusTitle" class="text-4xl font-bold text-yellow-400">
+⏳ Payment Submitted
 </h1>
 
-<p class="mt-5 text-gray-300">
-Your team has been officially registered for the
-<b>NOVUS Hackathon</b>.
+<p id="statusText" class="mt-5 text-gray-300">
+Your payment has been recorded.
+Please wait while the admin verifies it.
 </p>
 
-<p class="mt-2 text-sm text-gray-400">
-Payment verified successfully.
-A confirmation email will be sent shortly.
+<div id="spinner" class="mt-8 text-5xl animate-spin">🔄</div>
+
+<p class="mt-6 text-sm text-gray-400">
+This page refreshes automatically.
 </p>
-
-<a href="Home.html"
- class="inline-block mt-10
- bg-neon text-black px-10 py-4
- rounded-xl font-bold hover:scale-105 transition">
-
-Go to Home
-
-</a>
 
 </div>
 </section>
@@ -105,11 +95,60 @@ Go to Home
 
 <!-- ================= JS ================= -->
 
-<script>
-document.getElementById("navHome").onclick = () => {
-  window.location.href = "Home.html";
-};
+<script type="module">
+
+import BASE_URL from "../js/api.js";
+
+const teamId = localStorage.getItem("teamId");
+
+if (!teamId) {
+  location.href = "Home.html";
+}
+
+async function poll() {
+  const res = await fetch(`${BASE_URL}/api/public/team/${teamId}`);
+  const team = await res.json();
+
+  if (!res.ok) return;
+
+  if (team.isApproved) {
+
+    // 🔢 fetch approved teams list
+    const slotsRes = await fetch(`${BASE_URL}/api/public/slots`);
+    const approvedTeams = await slotsRes.json();
+
+    const index = approvedTeams.findIndex(
+      t => t._id === teamId
+    );
+
+    const teamNumber = index + 1;
+
+    const title = document.getElementById("statusTitle");
+    const text = document.getElementById("statusText");
+
+    title.innerText = `✅ Approved — Team #${teamNumber}`;
+    title.className = "text-3xl font-bold text-[#0AF748]";
+
+    text.innerHTML = `
+      You are officially selected 🎉 <br/>
+      <span class="text-[#0AF748] font-semibold">
+        Slot Number: #${teamNumber}
+      </span>
+    `;
+
+    document.getElementById("spinner").style.display = "none";
+
+    setTimeout(() => {
+      location.href = "slots.html";
+    }, 6000);
+  }
+}
+
+poll();
+setInterval(poll, 10000);
+
 </script>
+
 
 </body>
 </html>

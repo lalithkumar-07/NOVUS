@@ -22,31 +22,32 @@ const teamSchema = new mongoose.Schema(
 
     members: [memberSchema],
 
+    /* ✅ ROOT LEVEL APPROVAL FLAG */
+    isApproved: {
+      type: Boolean,
+      default: false,
+    },
+
     payment: {
-  upiId: String,
+      upiId: String,
 
-  transactionId: String,
+      transactionId: String,
 
-  method: {
-    type: String,
-    enum: ["upi", "cash"],
-    default: "upi",
-  },
+      method: {
+        type: String,
+        enum: ["upi", "cash"],
+        default: "upi",
+      },
 
-  verified: {
-    type: Boolean,
-    default: false,
-  },
-isApproved: {
-  type: Boolean,
-  default: false,
-},
+      verified: {
+        type: Boolean,
+        default: false,
+      },
 
-  paidAt: {
-    type: Date,
-  },
-},
-
+      paidAt: {
+        type: Date,
+      },
+    },
   },
   { timestamps: true }
 );

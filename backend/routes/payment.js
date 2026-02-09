@@ -3,6 +3,6 @@ import { submitPayment } from "../controllers/paymentController.js";
 
 const router = express.Router();
 
-router.post("/submit/:teamId", submitPayment);
+router.post("/:teamId", submitPayment);
 
 export default router;

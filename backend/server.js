@@ -5,7 +5,6 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 
 import Admin from "./models/Admin.js";
-import Team from "./models/Team.js";
 
 import registerRoutes from "./routes/registerRoutes.js";
 import paymentRoutes from "./routes/payment.js";
@@ -18,10 +17,19 @@ dotenv.config();
 const app = express();
 
 /* ------------------ Middleware ------------------ */
-app.use(cors());
+
+// CORS — allow frontend domain later
+app.use(cors({
+  origin: process.env.NODE_ENV === "production"
+    ? process.env.FRONTEND_URL || "*"
+    : "*",
+  credentials: true
+}));
+
 app.use(express.json());
 
 /* ------------------ Routes ------------------ */
+
 app.use("/api/register", registerRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/auth", authRoutes);
@@ -29,6 +37,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/public", publicRoutes);
 
 /* ------------------ Root Test ------------------ */
+
 app.get("/", (req, res) => {
   res.json({ status: "Backend running 🚀" });
 });
@@ -37,15 +46,17 @@ app.get("/", (req, res) => {
 
 const startServer = async () => {
   try {
-    /* CONNECT DATABASE */
+
     await connectDB();
 
+    console.log("✅ MongoDB Connected");
 
     /* ================================
-       AUTO ADMIN (DEV ONLY)
+       AUTO ADMIN — DEV ONLY
     ================================ */
 
     if (process.env.NODE_ENV !== "production") {
+
       const exists = await Admin.findOne({ username: "admin" });
 
       if (!exists) {
@@ -58,9 +69,9 @@ const startServer = async () => {
       } else {
         console.log("ℹ️ Admin already exists");
       }
+
     }
 
-    /* START SERVER */
     const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () => {

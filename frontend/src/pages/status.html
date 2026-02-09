@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>NOVUS — Registration Status</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#020F18] text-white flex items-center justify-center min-h-screen">
+
+<div class="bg-white/5 border border-white/10 rounded-xl p-10 text-center w-full max-w-md">
+
+<h1 id="statusTitle" class="text-3xl font-bold text-yellow-400">
+⏳ Waiting for Approval
+</h1>
+
+<p id="statusText" class="mt-4 text-gray-300">
+Payment received. Awaiting admin verification.
+</p>
+
+<div id="spinner" class="mt-6 text-5xl animate-spin">🔄</div>
+
+</div>
+
+<script type="module">
+
+import BASE_URL from "../js/api.js";
+
+const teamId = localStorage.getItem("teamId");
+
+if (!teamId) {
+  location.href = "Home.html";
+}
+
+async function poll() {
+  const res = await fetch(`${BASE_URL}/api/public/team/${teamId}`);
+  const team = await res.json();
+
+  if (!res.ok) return;
+
+  if (team.isApproved) {
+
+    // 🔢 fetch approved teams list
+    const slotsRes = await fetch(`${BASE_URL}/api/public/slots`);
+    const approvedTeams = await slotsRes.json();
+
+    const index = approvedTeams.findIndex(
+      t => t._id === teamId
+    );
+
+    const teamNumber = index + 1;
+
+    const title = document.getElementById("statusTitle");
+    const text = document.getElementById("statusText");
+
+    title.innerText = `✅ Approved — Team #${teamNumber}`;
+    title.className = "text-3xl font-bold text-[#0AF748]";
+
+    text.innerHTML = `
+      You are officially selected 🎉 <br/>
+      <span class="text-[#0AF748] font-semibold">
+        Slot Number: #${teamNumber}
+      </span>
+    `;
+
+    document.getElementById("spinner").style.display = "none";
+
+    setTimeout(() => {
+      location.href = "slots.html";
+    }, 6000);
+  }
+}
+
+poll();
+setInterval(poll, 10000);
+
+</script>
+
+
+</body>
+</html>
