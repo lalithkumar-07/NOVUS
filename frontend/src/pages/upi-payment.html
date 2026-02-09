@@ -85,8 +85,8 @@ UPI Payment Confirmation
   </h3>
 
   <img
-    src="http://localhost:5000/uploads/qr.png"
-    class="mx-auto w-64 rounded-xl border"/>
+  id="qrImg"
+  class="mx-auto w-64 rounded-xl border"/>
 
   <p class="text-xs text-gray-400 mt-4">
     Pay ₹2000 and submit the details.
@@ -145,6 +145,13 @@ UPI Payment Confirmation
 <!-- ================= JS ================= -->
 
 <script>
+const API_BASE =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://novus-7h23.onrender.com";
+
+document.getElementById("qrImg").src =
+  `${API_BASE}/uploads/qr.png`;
 
 /* BACK */
 
@@ -193,11 +200,17 @@ document.getElementById("upiForm")
   const teamData =
     JSON.parse(localStorage.getItem("teamData"));
 
-  if (!teamData)
-    return alert("Session expired");
+  if (!teamData) {
+  alert("Session expired — register again.");
+  localStorage.clear();
+  window.location.replace("Register.html");
+  return;
+}
+
 
   const res = await fetch(
-    "http://localhost:5000/api/payment/submit",
+  `${API_BASE}/api/payment/submit`,
+
     {
       method:"POST",
       headers:{

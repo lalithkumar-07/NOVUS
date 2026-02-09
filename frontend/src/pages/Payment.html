@@ -153,6 +153,10 @@ Proceed to Payment
 <!-- ================= JS ================= -->
 
 <script>
+const API_BASE =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://novus-7h23.onrender.com";
 
 /* BACK */
 document.getElementById("navBack").onclick = () => {
@@ -165,9 +169,12 @@ const teamData =
  JSON.parse(localStorage.getItem("teamData"));
 
 if (!teamData) {
-  alert("Session expired — register again.");
-  location.href = "Register.html";
+  alert("Session expired — please register again.");
+  localStorage.clear();
+  window.location.replace("Register.html");
+  return;
 }
+
 
 const summaryEl = document.getElementById("summary");
 
@@ -199,8 +206,6 @@ document.getElementById("payBtn").onclick = () => {
 };
 
 </script>
-<script type="module" src="./js/payment.js"></script>
-<button onclick="submitPayment()">Submit Payment</button>
 
 </body>
 </html>
