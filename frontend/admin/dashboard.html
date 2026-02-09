@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NOVUS Admin Dashboard</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: system-ui;
+    }
+  </style>
+</head>
+
+<body class="bg-[#020F18] text-white">
+
+  <!-- HEADER -->
+  <header class="p-6 border-b border-white/10 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-[#0AF748]">
+      NOVUS Admin
+    </h1>
+
+    <button
+      onclick="logout()"
+      class="underline hover:text-red-400 transition">
+      Logout
+    </button>
+  </header>
+
+  <!-- MAIN -->
+  <main class="p-6">
+
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold">Registrations</h2>
+
+      <button
+        onclick="exportCSV()"
+        class="bg-[#0AF748] text-black px-5 py-2 rounded font-semibold hover:scale-105 transition">
+        Export CSV
+      </button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border border-white/10">
+
+        <thead class="bg-white/10">
+          <tr>
+            <th class="p-2 text-left">Team</th>
+            <th class="p-2 text-left">College</th>
+            <th class="p-2 text-left">Dept</th>
+            <th class="p-2 text-left">Leader</th>
+            <th class="p-2 text-left">Payment</th>
+            <th class="p-2 text-left">Txn ID</th>
+            <th class="p-2 text-left">Mode</th>
+            <th class="p-2 text-left">Actions</th>
+          </tr>
+        </thead>
+
+        <!-- 🔥 IMPORTANT: THIS IS WHAT JS FILLS -->
+        <tbody id="teamsTable"></tbody>
+
+      </table>
+    </div>
+
+  </main>
+
+  <!-- JS -->
+  <script type="module" src="./js/api.js"></script>
+  <script type="module" src="./js/dashboard.js"></script>
+
+  <!-- LOGOUT -->
+  <script>
+    window.logout = () => {
+      localStorage.removeItem("adminToken");
+      location.href = "login.html";
+    };
+  </script>
+
+</body>
+</html>

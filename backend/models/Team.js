@@ -1,26 +1,54 @@
 import mongoose from "mongoose";
 
-const teamSchema = new mongoose.Schema({
+const memberSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  roll: String,
+});
 
-  teamName: { type: String, unique: true },
-  college: String,
+const teamSchema = new mongoose.Schema(
+  {
+    teamName: { type: String, required: true },
+    college: { type: String, required: true },
+    department: { type: String, required: true },
 
-  leader: Object,
-  members: Array,
+    leader: {
+      name: String,
+      email: String,
+      phone: String,
+      roll: String,
+    },
 
+    members: [memberSchema],
+
+    payment: {
   upiId: String,
+
   transactionId: String,
 
-  status: {
+  method: {
     type: String,
-    default: "PENDING_VERIFICATION"
+    enum: ["upi", "cash"],
+    default: "upi",
   },
 
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+isApproved: {
+  type: Boolean,
+  default: false,
+},
 
-});
+  paidAt: {
+    type: Date,
+  },
+},
+
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model("Team", teamSchema);

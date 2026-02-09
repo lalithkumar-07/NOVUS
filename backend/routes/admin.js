@@ -1,22 +1,23 @@
 import express from "express";
-import multer from "multer";
+
+import {
+  getAllTeams,
+  verifyPayment,
+  markCashPayment,
+} from "../controllers/adminController.js";
+
+import { protect } from "../middlewares/authMiddleware.js";
+import { adminOnly } from "../middlewares/adminOnly.js";
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    cb(null, "qr.png");
-  }
-});
+/* 🔒 Protect all admin routes */
+router.use(protect, adminOnly);
 
-const upload = multer({ storage });
+router.get("/teams", getAllTeams);
 
-router.post("/upload-qr", upload.single("qr"), (req, res) => {
-  res.json({
-    success: true,
-    path: "/uploads/qr.png"
-  });
-});
+router.put("/verify/:teamId", verifyPayment);
+
+router.put("/cash/:teamId", markCashPayment);
 
 export default router;

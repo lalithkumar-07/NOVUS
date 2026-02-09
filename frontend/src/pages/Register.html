@@ -70,31 +70,37 @@
     <form id="regForm" class="space-y-10">
 
       <!-- TEAM DETAILS -->
-      <div class="bg-white/5 p-6 rounded-xl border border-white/10">
-        <h2 class="text-xl mb-4">Team Details</h2>
+<div class="bg-white/5 p-6 rounded-xl border border-white/10">
+  <h2 class="text-xl mb-4">Team Details</h2>
 
-        <input id="teamName" required
-          placeholder="Team Name"
-          class="w-full p-3 bg-black/40 rounded"/>
+  <input id="teamName" required
+    placeholder="Team Name"
+    class="w-full p-3 bg-black/40 rounded"/>
 
-        <input id="college"
-          placeholder="College Name"
-          class="w-full mt-4 p-3 bg-black/40 rounded"/>
-      </div>
+  <input id="college" required
+    placeholder="College Name"
+    class="w-full mt-4 p-3 bg-black/40 rounded"/>
+
+  <!-- DEPARTMENT -->
+  <input id="department" required
+    placeholder="Department (eg: CSE, ECE, AI & DS)"
+    class="w-full mt-4 p-3 bg-black/40 rounded"/>
+</div>
 
       <!-- LEADER -->
       <div class="bg-white/5 p-6 rounded-xl border border-white/10">
         <h2 class="text-xl mb-4">Team Leader</h2>
 
         <div class="grid md:grid-cols-4 gap-4">
-          <input id="leaderName" placeholder="Name"
-            class="p-3 bg-black/40 rounded"/>
-          <input id="leaderEmail" placeholder="Email"
-            class="p-3 bg-black/40 rounded"/>
-          <input id="leaderPhone" placeholder="Phone"
-            class="p-3 bg-black/40 rounded"/>
-          <input id="leaderRoll" placeholder="Roll Number"
-            class="p-3 bg-black/40 rounded"/>
+          <input id="leaderName" required placeholder="Name"
+  class="p-3 bg-black/40 rounded"/>
+<input id="leaderEmail" required placeholder="Email"
+  class="p-3 bg-black/40 rounded"/>
+<input id="leaderPhone" required placeholder="Phone"
+  class="p-3 bg-black/40 rounded"/>
+<input id="leaderRoll" required placeholder="Roll Number"
+  class="p-3 bg-black/40 rounded"/>
+
         </div>
       </div>
 
@@ -129,6 +135,8 @@
 <script>
   let memberCount = 0;
   const MAX_MEMBERS = 3;
+  const API_BASE = "http://localhost:5000";
+
 
   function addMember() {
     if (memberCount >= MAX_MEMBERS) {
@@ -201,19 +209,45 @@
     });
 
     const data = {
-      teamName: teamName.value.trim(),
-      college: college.value.trim(),
-      leader: {
-        name: leaderName.value,
-        email: leaderEmail.value,
-        phone: leaderPhone.value,
-        roll: leaderRoll.value
-      },
-      members
-    };
+  teamName: teamName.value.trim(),
+  college: college.value.trim(),
+  department: department.value.trim(),
 
-    localStorage.setItem("teamData", JSON.stringify(data));
-    window.location.href = "Rules.html";
+  leader: {
+    name: leaderName.value,
+    email: leaderEmail.value,
+    phone: leaderPhone.value,
+    roll: leaderRoll.value
+  },
+
+  members
+};
+
+
+    fetch(`${API_BASE}/api/register`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+})
+.then(res => res.json())
+.then(result => {
+
+  if (!result._id) {
+    alert(result.message || "Registration failed");
+    return;
+  }
+
+  console.log("Saved:", result);
+
+  localStorage.setItem("teamId", result._id);
+  window.location.href = "Rules.html";
+})
+
+.catch(err => {
+  alert("Registration failed");
+  console.error(err);
+});
+
   });
 </script>
 
