@@ -215,14 +215,18 @@ agree.addEventListener("change", () => {
 
 btn.onclick = () => {
 
-  if (!localStorage.getItem("teamData")) {
-    alert("Session expired — register again.");
+  const teamData = localStorage.getItem("teamData");
+  const teamId = localStorage.getItem("teamId");
+
+  if (!teamData && !teamId) {
+    alert("Session expired — please register again.");
     location.href = "Register.html";
     return;
   }
 
   location.href = "Payment.html";
 };
+
 
 </script>
 

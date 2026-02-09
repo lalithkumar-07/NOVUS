@@ -135,7 +135,11 @@
 <script>
   let memberCount = 0;
   const MAX_MEMBERS = 3;
-  const API_BASE = "http://localhost:5000";
+  const API_BASE =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://novus-7h23.onrender.com";
+
 
 
   function addMember() {
@@ -239,9 +243,13 @@
 
   console.log("Saved:", result);
 
+  // ✅ STORE BOTH ID + FULL DATA
   localStorage.setItem("teamId", result._id);
+  localStorage.setItem("teamData", JSON.stringify(result));
+
   window.location.href = "Rules.html";
 })
+
 
 .catch(err => {
   alert("Registration failed");
@@ -272,8 +280,7 @@
     });
   });
 </script>
-<script type="module" src="./js/register.js"></script>
-<button onclick="submitRegistration()">Register</button>
+
 
 </body>
 </html>
