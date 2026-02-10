@@ -1,3 +1,4 @@
+import Team from "../models/Team.js";
 export const registerTeam = async (req, res) => {
   try {
 
