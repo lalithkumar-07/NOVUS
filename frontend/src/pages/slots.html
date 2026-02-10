@@ -68,7 +68,12 @@
   </footer>
 
 <script>
-const API = "http://localhost:5000/api/public/slots";
+const API =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5000/api/public/slots"
+    : "https://novus-7h23.onrender.com/api/public/slots";
+
 
 async function loadSlots() {
   const status = document.getElementById("status");
