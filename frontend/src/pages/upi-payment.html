@@ -145,13 +145,22 @@ UPI Payment Confirmation
 <!-- ================= JS ================= -->
 
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
 const API_BASE =
   window.location.hostname === "localhost"
     ? "http://localhost:5000"
     : "https://novus-7h23.onrender.com";
 
-document.getElementById("qrImg").src =
-  `${API_BASE}/uploads/qr.png`;
+const qr = document.getElementById("qrImg");
+
+if (qr) {
+  qr.src = `${API_BASE}/uploads/qr.png`;
+  console.log("QR loading from:", qr.src);
+} else {
+  console.error("QR IMG NOT FOUND");
+}
 
 /* BACK */
 
@@ -237,6 +246,7 @@ document.getElementById("upiForm")
 
   }
 
+});
 });
 
 </script>

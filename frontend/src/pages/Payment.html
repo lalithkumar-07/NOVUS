@@ -153,59 +153,63 @@ Proceed to Payment
 <!-- ================= JS ================= -->
 
 <script>
-const API_BASE =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://novus-7h23.onrender.com";
+document.addEventListener("DOMContentLoaded", () => {
 
-/* BACK */
-document.getElementById("navBack").onclick = () => {
-  location.href = "Rules.html";
-};
+  const API_BASE =
+    window.location.hostname === "localhost"
+      ? "http://localhost:5000"
+      : "https://novus-7h23.onrender.com";
 
-/* LOAD TEAM */
+  /* BACK */
+  const backBtn = document.getElementById("navBack");
+  backBtn.onclick = () => {
+    location.href = "Rules.html";
+  };
 
-const teamData =
- JSON.parse(localStorage.getItem("teamData"));
+  /* LOAD TEAM */
 
-if (!teamData) {
-  alert("Session expired — please register again.");
-  localStorage.clear();
-  window.location.replace("Register.html");
-  return;
-}
+  const raw = localStorage.getItem("teamData");
 
+  if (!raw) {
+    alert("Session expired — please register again.");
+    localStorage.clear();
+    window.location.replace("Register.html");
+    return;
+  }
 
-const summaryEl = document.getElementById("summary");
+  const teamData = JSON.parse(raw);
 
-if (summaryEl && teamData) {
+  const summaryEl = document.getElementById("summary");
+
   summaryEl.innerHTML = `
     <p><strong>Team:</strong> ${teamData.teamName}</p>
     <p><strong>College:</strong> ${teamData.college}</p>
     <p><strong>Leader:</strong> ${teamData.leader.name}</p>
     <p><strong>Email:</strong> ${teamData.leader.email}</p>
   `;
-}
 
+  /* PAY BUTTON */
 
-/* DEMO PAY → SUCCESS */
+  const payBtn = document.getElementById("payBtn");
+  const statusBox = document.getElementById("statusBox");
 
-document.getElementById("payBtn").onclick = () => {
+  payBtn.addEventListener("click", () => {
 
-  const btn = document.getElementById("payBtn");
+    console.log("💳 PAY CLICKED");
 
-  btn.disabled = true;
+    payBtn.disabled = true;
 
-  document.getElementById("statusBox")
-    .classList.remove("hidden");
+    statusBox.classList.remove("hidden");
 
-  setTimeout(() => {
-    location.href = "upi-payment.html";
-  }, 1500);
+    setTimeout(() => {
+      location.href = "upi-payment.html";
+    }, 1500);
 
-};
+  });
 
+});
 </script>
+
 
 </body>
 </html>
