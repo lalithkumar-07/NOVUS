@@ -1,10 +1,10 @@
-import { API_BASE } from "./api.js";
+import BASE_URL from "./api.js";
 
 window.login = async function () {
-  const username = document.getElementById("email").value; // using email box as username
+  const username = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch(`${API_BASE}/api/auth/login`, {
+  const res = await fetch(`${BASE_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -18,5 +18,7 @@ window.login = async function () {
   }
 
   localStorage.setItem("adminToken", data.token);
+
+  // ✅ redirect
   window.location.href = "dashboard.html";
 };
