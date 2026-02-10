@@ -233,13 +233,18 @@
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(data)
 })
-.then(res => res.json())
+.then(async res => {
+  const result = await res.json();
+  console.log("REGISTER RESPONSE:", result);
+  return result;
+})
 .then(result => {
 
   if (!result._id) {
     alert(result.message || "Registration failed");
     return;
   }
+
 
   console.log("Saved:", result);
 

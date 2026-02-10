@@ -19,12 +19,30 @@ const app = express();
 /* ------------------ Middleware ------------------ */
 
 // CORS — allow frontend domain later
-app.use(cors({
-  origin: process.env.NODE_ENV === "production"
-    ? process.env.FRONTEND_URL || "*"
-    : "*",
-  credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",  
+  "https://thenovus.site",
+  "https://www.thenovus.site",
+
+  "https://novus-ivory.vercel.app"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS blocked: " + origin));
+      }
+    },
+    credentials: true
+  })
+);
+
 
 app.use(express.json());
 
