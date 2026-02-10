@@ -218,7 +218,7 @@ document.getElementById("upiForm")
 
 
   const res = await fetch(
-  `${API_BASE}/api/payment/submit`,
+  `${API_BASE}/api/payment/${teamData._id}`,
 
     {
       method:"POST",
@@ -233,18 +233,23 @@ document.getElementById("upiForm")
     }
   );
 
-  const data = await res.json();
+console.log("PAYMENT STATUS:", res.status);
 
-  if (data.success) {
 
-    localStorage.removeItem("teamData");
-    location.href = "Success.html";
+const data = await res.json();
 
-  } else {
+console.log("PAYMENT RESPONSE:", data);
 
-    alert(data.msg || "Submission failed");
+if (res.ok) {
 
-  }
+  localStorage.removeItem("teamData");
+  location.href = "Success.html";
+
+} else {
+
+  alert(data.message || "Submission failed");
+
+}
 
 });
 });
