@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NOVUS Hackathon 2026</title>
+<title>THE NOVUS</title>
 
 <!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -62,9 +62,13 @@ tailwind.config = {
   50% { box-shadow:0 0 35px rgba(10,247,72,.6);}
 }
 
+.card-hover {
+  transition: all 0.35s ease;
+}
+
 .card-hover:hover {
-  transform:translateY(-8px) scale(1.02);
-  box-shadow:0 0 35px rgba(10,247,72,.3);
+  transform: translateY(-6px) scale(1.03);
+  background: rgba(255,255,255,0.1);
 }
 
 /* ---------------- COUNTDOWN ---------------- */
@@ -110,7 +114,6 @@ tailwind.config = {
 
     <!-- Logo -->
     <div class="flex items-center gap-3">
-    <img src="public/logo.webp" class="w-10 h-10 object-contain" alt="NOVUS Logo">
       <span class="font-bold text-xl text-neon">NOVUS</span>
     </div>
 
@@ -185,32 +188,96 @@ Event Details
 
 <section id="details" class="max-w-6xl mx-auto px-6 mt-40 reveal">
 
-<h2 class="text-4xl font-bold text-neon mb-10">Hackathon Details</h2>
+  <h2 class="text-4xl font-bold text-neon mb-10">
+    Hackathon Details
+  </h2>
 
-<div class="grid md:grid-cols-4 gap-6">
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-<div class="bg-white/5 p-6 rounded-xl text-center card-hover transition">
-📍 <p class="mt-2 font-semibold">Venue</p>
-<p class="text-gray-400">Malla Reddy Deemed to be University</p>
-</div>
+    <!-- VENUE -->
+    <div
+      class="border border-white/10 rounded-xl bg-white/5 p-5 hover:bg-white/10 transition transform hover:-translate-y-1">
 
-<div class="bg-white/5 p-6 rounded-xl text-center card-hover transition">
-📅 <p class="mt-2 font-semibold">Date</p>
-<p class="text-gray-400">7th March 2026</p>
-</div>
+      <div class="flex justify-between items-start mb-2">
+        <h3 class="text-lg font-bold text-[#0AF748]">
+          Venue
+        </h3>
 
-<div class="bg-white/5 p-6 rounded-xl text-center card-hover transition">
-⏱ <p class="mt-2 font-semibold">Duration</p>
-<p class="text-gray-400">24 Hours</p>
-</div>
+        <span class="text-xs px-2 py-1 rounded bg-white/10">
+          📍
+        </span>
+      </div>
 
-<div class="bg-white/5 p-6 rounded-xl text-center card-hover transition">
-💸 <p class="mt-2 font-semibold">Fee</p>
-<p class="text-gray-400">₹2000 /per team</p>
-</div>
+      <div class="border-t border-white/10 pt-3 mt-3 text-sm text-white/60">
+        Malla Reddy Deemed to be University
+      </div>
 
-</div>
+    </div>
+
+    <!-- DATE -->
+    <div
+      class="border border-white/10 rounded-xl bg-white/5 p-5 hover:bg-white/10 transition transform hover:-translate-y-1">
+
+      <div class="flex justify-between items-start mb-2">
+        <h3 class="text-lg font-bold text-[#0AF748]">
+          Date
+        </h3>
+
+        <span class="text-xs px-2 py-1 rounded bg-white/10">
+          📅
+        </span>
+      </div>
+
+      <div class="border-t border-white/10 pt-3 mt-3 text-sm text-white/60">
+        7th March 2026
+      </div>
+
+    </div>
+
+    <!-- DURATION -->
+    <div
+      class="border border-white/10 rounded-xl bg-white/5 p-5 hover:bg-white/10 transition transform hover:-translate-y-1">
+
+      <div class="flex justify-between items-start mb-2">
+        <h3 class="text-lg font-bold text-[#0AF748]">
+          Duration
+        </h3>
+
+        <span class="text-xs px-2 py-1 rounded bg-white/10">
+          ⏱
+        </span>
+      </div>
+
+      <div class="border-t border-white/10 pt-3 mt-3 text-sm text-white/60">
+        24 Hours
+      </div>
+
+    </div>
+
+    <!-- FEE -->
+    <div
+      class="border border-white/10 rounded-xl bg-white/5 p-5 hover:bg-white/10 transition transform hover:-translate-y-1">
+
+      <div class="flex justify-between items-start mb-2">
+        <h3 class="text-lg font-bold text-[#0AF748]">
+          Registration Fee
+        </h3>
+
+        <span class="text-xs px-2 py-1 rounded bg-white/10">
+          💸
+        </span>
+      </div>
+
+      <div class="border-t border-white/10 pt-3 mt-3 text-sm text-white/60">
+        ₹2000 / team
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
+
 
 <!-- ================= ABOUT ================= -->
 
@@ -255,6 +322,28 @@ network, and make something extraordinary
 
 </div>
 
+<div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl card-hover">
+  SPONSORS
+<!-- 
+  <img
+    src=""
+    alt=""
+    class="w-full h-full object-contain logo-hover">
+
+</div> -->
+
+</div>
+<div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl card-hover">
+  SPONSORS
+<!-- 
+  <img
+    src=""
+    alt=""
+    class="w-full h-full object-contain logo-hover">
+
+</div> -->
+
+</div>
 <div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl card-hover">
   SPONSORS
 <!-- 

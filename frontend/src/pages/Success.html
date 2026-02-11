@@ -45,10 +45,7 @@ tailwind.config = {
 
   <!-- LOGO -->
   <div class="flex items-center gap-3">
-    <img
-      src="../../public/logo.png"
-      alt="NOVUS Logo"
-      class="w-10 h-10 object-contain"/>
+    
     <span class="font-bold text-xl text-neon">
       NOVUS
     </span>
@@ -56,7 +53,7 @@ tailwind.config = {
 
   <button id="navHome"
     class="text-sm underline hover:text-neon">
-    Home
+    <a href="index.html" style="text-decoration: none;">Home</a>
   </button>
 
 </div>
@@ -73,19 +70,22 @@ tailwind.config = {
  border border-white/10
  text-center">
 
-<h1 id="statusTitle" class="text-4xl font-bold text-yellow-400">
-⏳ Payment Submitted
+<h1 class="text-4xl font-bold text-[#0AF748]">
+  Payment Under Review
 </h1>
 
-<p id="statusText" class="mt-5 text-gray-300">
-Your payment has been recorded.
-Please wait while the admin verifies it.
+<p class="mt-6 text-gray-300 leading-relaxed">
+  Thank you for completing the payment.  
+  Your registration is currently under review by the admin.
 </p>
 
-<div id="spinner" class="mt-8 text-5xl animate-spin">🔄</div>
+<p class="mt-4 text-sm text-white/60">
+  ⏳ Verification usually takes up to <span class="text-[#0AF748] font-semibold">24 hours</span>.
+  Once approved, your team will appear on the Slots page.
+</p>
 
-<p class="mt-6 text-sm text-gray-400">
-This page refreshes automatically.
+<p class="mt-6 text-sm text-white/40">
+  Please revisit the Slots section later to check your approval status.
 </p>
 
 </div>

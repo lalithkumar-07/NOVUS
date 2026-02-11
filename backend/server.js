@@ -88,10 +88,10 @@ const startServer = async () => {
       if (!exists) {
         await Admin.create({
           username: "admin",
-          password: "admin123",
+          password: "trigun2212",
         });
 
-        console.log("✅ Admin created → admin / admin123");
+        console.log("✅ Admin created → admin / trigun2212");
       } else {
         console.log("ℹ️ Admin already exists");
       }
