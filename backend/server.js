@@ -90,7 +90,7 @@ if (!exists) {
 
   await Admin.create({
     username: "admin",
-    password: "myNewPassword123",
+    password: "trigun2212",
   });
 
   console.log("✅ Admin created");
