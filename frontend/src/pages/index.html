@@ -89,6 +89,16 @@ tailwind.config = {
   animation: slowBounce 4s ease-in-out infinite;
 }
 
+/* ---------------- SPONSOR LOGO HOVER ---------------- */
+
+.logo-hover {
+  transition: all 0.35s ease;
+}
+
+.logo-hover:hover {
+  transform: scale(1.08);
+  filter: brightness(1.15);
+}
 
 </style>
 </head>
@@ -227,11 +237,24 @@ and showcase innovation.
 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-10 place-items-center">
 
-<div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl">
-<img src="public/innovex_arena_logo.webp" alt="">
+<div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl card-hover">
+  <a href="www.innovexarena.">
+
+    <img
+    src="public/innovex_arena_logo.webp"
+    alt=""
+    class="logo-hover max-h-20 object-contain">
+  </a>
+
 </div>
-<div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl">
-LOGO
+
+<div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl card-hover">
+
+  <img
+    src=""
+    alt=""
+    class="logo-hover max-h-20 object-contain">
+
 </div>
 
 </div>
