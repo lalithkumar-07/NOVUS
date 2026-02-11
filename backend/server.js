@@ -81,22 +81,23 @@ const startServer = async () => {
        AUTO ADMIN — DEV ONLY
     ================================ */
 
-    if (process.env.NODE_ENV !== "production") {
+   const exists = await Admin.findOne({ username: "admin" });
 
-      const exists = await Admin.findOne({ username: "admin" });
+console.log("ADMIN EXISTS?", exists);
 
-      if (!exists) {
-        await Admin.create({
-          username: "admin",
-          password: "trigun2212",
-        });
+if (!exists) {
+  console.log("👉 Creating admin...");
 
-        console.log("✅ Admin created → admin / trigun2212");
-      } else {
-        console.log("ℹ️ Admin already exists");
-      }
+  await Admin.create({
+    username: "admin",
+    password: "myNewPassword123",
+  });
 
-    }
+  console.log("✅ Admin created");
+} else {
+  console.log("ℹ️ Admin already exists");
+}
+
 
     const PORT = process.env.PORT || 5000;
 
