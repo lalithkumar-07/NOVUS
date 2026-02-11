@@ -7,8 +7,7 @@ export function loadNavbar() {
   <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
 
     <!-- LOGO -->
-    <a href="Home.html" class="flex items-center gap-3">
-      <img src="../../public/logo.png" class="h-10" />
+    <a href="index.html" class="flex items-center gap-3">
       <span class="text-neon font-bold tracking-wide hidden sm:block">
         NOVUS
       </span>
@@ -16,7 +15,7 @@ export function loadNavbar() {
 
     <!-- DESKTOP -->
     <nav class="hidden md:flex gap-8 font-medium">
-      <a href="Home.html" class="hover:text-neon">Home</a>
+      <a href="index.html" class="hover:text-neon">Home</a>
       <a href="Register.html" class="hover:text-neon">Register</a>
       <a href="Rules.html" class="hover:text-neon">Rules</a>
     </nav>
@@ -32,7 +31,7 @@ export function loadNavbar() {
 
   <div id="mobileMenu"
     class="hidden bg-darkbg border-t border-white/10 px-6 py-6 flex flex-col gap-6 md:hidden">
-    <a href="Home.html">Home</a>
+    <a href="index.html">Home</a>
     <a href="Register.html">Register</a>
     <a href="Rules.html">Rules</a>
   </div>

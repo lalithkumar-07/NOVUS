@@ -7,7 +7,7 @@ export function showPageLoader() {
 
   loader.innerHTML = `
     <div class="flex flex-col items-center gap-4">
-      <img src="../../public/logo.png"
+      <img src="../../public/logo.webp"
            class="w-24 animate-spin-slow" />
       <p class="text-gray-400">NOVUS</p>
     </div>
