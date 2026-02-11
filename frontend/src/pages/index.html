@@ -74,6 +74,21 @@ tailwind.config = {
   padding:18px;
   min-width:90px;
 }
+/* ---------------- SLOW LOGO FLOAT ---------------- */
+
+@keyframes slowBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+.animate-slow-bounce {
+  animation: slowBounce 4s ease-in-out infinite;
+}
+
 
 </style>
 </head>
@@ -150,7 +165,7 @@ Event Details
 </div>
 
 <div class="flex justify-center">
-<img src="public/logo.webp" class="w-80 animate-bounce"/>
+<img src="public/logo.webp" class="w-80 animate-slow-bounce"/>
 </div>
 
 </div>
@@ -213,7 +228,7 @@ and showcase innovation.
 <div class="grid grid-cols-2 md:grid-cols-4 gap-10 place-items-center">
 
 <div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl">
-LOGO
+<img src="public/innovex_arena_logo.webp" alt="">
 </div>
 <div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl">
 LOGO
