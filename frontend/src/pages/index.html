@@ -196,7 +196,7 @@ Event Details
 
 <div class="bg-white/5 p-6 rounded-xl text-center card-hover transition">
 📅 <p class="mt-2 font-semibold">Date</p>
-<p class="text-gray-400">21 Feb 2026</p>
+<p class="text-gray-400">7th March 2026</p>
 </div>
 
 <div class="bg-white/5 p-6 rounded-xl text-center card-hover transition">
@@ -238,7 +238,7 @@ and showcase innovation.
 <div class="grid grid-cols-2 md:grid-cols-4 gap-10 place-items-center">
 
 <div class="bg-white/10 w-40 h-28 flex items-center justify-center rounded-xl card-hover">
-  <a href="www.innovexarena.">
+  <a href="https://www.innovexarena.in/" target="_blank" >
 
     <img
     src="public/innovex_arena_logo.webp"
@@ -295,16 +295,24 @@ document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
 /* Countdown */
 // Set event date: Feb 21, 2026 (midnight)
-const eventDate = new Date("2026-02-21T00:00:00").getTime();
+const eventDate = new Date("2026-03-07T00:00:00").getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
   const diff = eventDate - now;
 
-  document.getElementById("days").innerText = Math.max(0, Math.floor(diff / 86400000));
-  document.getElementById("hours").innerText = Math.max(0, Math.floor((diff % 86400000) / 3600000));
-  document.getElementById("mins").innerText = Math.max(0, Math.floor((diff % 3600000) / 60000));
-  document.getElementById("secs").innerText = Math.max(0, Math.floor((diff % 60000) / 1000));
+  document.getElementById("days").innerText =
+  Math.max(0, Math.floor(diff / 86400000));
+
+document.getElementById("hours").innerText =
+  Math.max(0, Math.floor((diff % 86400000) / 3600000));
+
+document.getElementById("mins").innerText =
+  Math.max(0, Math.floor((diff % 3600000) / 60000));
+
+document.getElementById("secs").innerText =
+  Math.max(0, Math.floor((diff % 60000) / 1000));
+
 }, 1000);
 
 /* Smooth scroll */
