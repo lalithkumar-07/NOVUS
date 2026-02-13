@@ -204,80 +204,109 @@
   }
 
   document.getElementById("regForm").addEventListener("submit", e => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!isAllowedDomain(leaderEmail.value))
-      return alert("Use Gmail or Outlook email.");
+  // get elements properly
+  const leaderName = document.getElementById("leaderName");
+  const leaderEmail = document.getElementById("leaderEmail");
+  const leaderPhone = document.getElementById("leaderPhone");
+  const leaderRoll = document.getElementById("leaderRoll");
+  const leaderFood = document.getElementById("leaderFood");
 
-    if (!isValidPhone(leaderPhone.value))
-      return alert("Invalid phone number.");
+  if (!isAllowedDomain(leaderEmail.value))
+    return alert("Use Gmail or Outlook email.");
 
-    const members = [];
+  if (!isValidPhone(leaderPhone.value))
+    return alert("Invalid phone number.");
 
-   document.querySelectorAll(".member-block").forEach(row => {
-  const inputs = row.querySelectorAll("input");
-  const select = row.querySelector("select");
+  if (!leaderFood.value)
+    return alert("Please select the food preference for the team leader.");
 
-  members.push({
-    name: inputs[0].value,
-    email: inputs[1].value,
-    phone: inputs[2].value,
-    roll: inputs[3].value,
-    food: select.value
+  const members = [];
+
+  document.querySelectorAll(".member-block").forEach(row => {
+    const inputs = row.querySelectorAll("input");
+    const select = row.querySelector("select");
+
+    members.push({
+      name: inputs[0].value,
+      email: inputs[1].value,
+      phone: inputs[2].value,
+      roll: inputs[3].value,
+      food: select.value
+    });
   });
-});
 
+  const data = {
+    teamName: teamName.value.trim(),
+    college: college.value.trim(),
+    department: department.value.trim(),
 
-    const data = {
-  teamName: teamName.value.trim(),
-  college: college.value.trim(),
-  department: department.value.trim(),
+    leader: {
+      name: leaderName.value,
+      email: leaderEmail.value,
+      phone: leaderPhone.value,
+      roll: leaderRoll.value,
+      food: leaderFood.value
+    },
 
-  leader: {
-    name: leaderName.value,
-    email: leaderEmail.value,
-    phone: leaderPhone.value,
-    roll: leaderRoll.value
-  },
+    members
+  };
 
-  members
-};
+  fetch(`${API_BASE}/api/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
 
+    // ✅ IMPORTANT FIX
+    if (!result.team?._id) {
+      alert(result.message || "Registration failed");
+      return;
+    }
 
-    fetch(`${API_BASE}/api/register`, {
+    console.log("Saved:", result.team);
+
+    localStorage.setItem("teamId", result.team._id);
+    localStorage.setItem("teamData", JSON.stringify(result.team));
+
+    window.location.href = "Rules.html";
+  })
+  .catch(err => {
+    alert("Registration failed");
+    console.error(err);
+  });
+  fetch(`${API_BASE}/api/register`, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(data)
 })
-.then(async res => {
-  const result = await res.json();
-  console.log("REGISTER RESPONSE:", result);
-  return result;
-})
+.then(res => res.json())
 .then(result => {
 
-  if (!result._id) {
+  // correct response handling
+  if (!result.team?._id) {
     alert(result.message || "Registration failed");
     return;
   }
 
+  console.log("Saved:", result.team);
 
-  console.log("Saved:", result);
-
-  // ✅ STORE BOTH ID + FULL DATA
-  localStorage.setItem("teamId", result._id);
-  localStorage.setItem("teamData", JSON.stringify(result));
+  localStorage.setItem("teamId", result.team._id);
+  localStorage.setItem("teamData", JSON.stringify(result.team));
 
   window.location.href = "Rules.html";
 })
-
-
 .catch(err => {
   alert("Registration failed");
   console.error(err);
 });
 
-  });
+});
+
+
 </script>
 
 <!-- COMPONENTS -->
