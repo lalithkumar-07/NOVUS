@@ -104,3 +104,81 @@ export const markCashPayment = async (req, res) => {
     res.status(500).json({ message: "Cash update failed" });
   }
 };
+
+/* ===========================
+   DELETE TEAM
+=========================== */
+
+export const deleteTeam = async (req, res) => {
+  try {
+    const team = await Team.findById(req.params.teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    await Team.findByIdAndDelete(req.params.teamId);
+
+    res.json({ message: "Team deleted successfully" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to delete team" });
+  }
+};
+
+/* ===========================
+   FOOD REPORT
+=========================== */
+export const getFoodReport = async (req, res) => {
+  try {
+    const teams = await Team.find();
+
+    let totalMembers = 0;
+    let totalVeg = 0;
+    let totalNonVeg = 0;
+
+    const report = teams.map(t => {
+
+      let veg = 0;
+      let nonveg = 0;
+
+      // leader
+      if (t.leader?.food === "veg") veg++;
+      if (t.leader?.food === "nonveg") nonveg++;
+
+      // members
+      t.members.forEach(m => {
+        if (m.food === "veg") veg++;
+        if (m.food === "nonveg") nonveg++;
+      });
+
+      const teamTotal = veg + nonveg;
+
+      totalMembers += teamTotal;
+      totalVeg += veg;
+      totalNonVeg += nonveg;
+
+      return {
+        teamName: t.teamName,
+        leader: t.leader?.name,
+        total: teamTotal,
+        veg,
+        nonveg
+      };
+    });
+
+    res.json({
+      totals: {
+        totalMembers,
+        totalVeg,
+        totalNonVeg
+      },
+      teams: report
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to generate food report" });
+  }
+};

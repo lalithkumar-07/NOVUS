@@ -1,4 +1,6 @@
 import express from "express";
+import { deleteTeam } from "../controllers/adminController.js";
+import { getFoodReport } from "../controllers/adminController.js";
 
 import {
   getAllTeams,
@@ -19,5 +21,9 @@ router.get("/teams", getAllTeams);
 router.put("/verify/:teamId", verifyPayment);
 
 router.put("/cash/:teamId", markCashPayment);
+
+router.delete("/team/:teamId", deleteTeam);
+
+router.get("/food-report", getFoodReport);
 
 export default router;

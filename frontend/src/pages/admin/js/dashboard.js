@@ -35,24 +35,32 @@ async function loadTeams() {
       <td>${t.payment?.method || "-"}</td>
 
       <td class="space-x-3">
-        ${
-          paid
-            ? `<span class="text-green-400">Verified</span>`
-            : `
-              <button
-                onclick="verifyTeam('${t._id}')"
-                class="text-green-400 underline">
-                Verify UPI
-              </button>
 
-              <button
-                onclick="markCash('${t._id}')"
-                class="text-yellow-400 underline">
-                Cash
-              </button>
-            `
-        }
-      </td>
+  ${
+    paid
+      ? `<span class="text-green-400">Verified</span>`
+      : `
+        <button
+          onclick="verifyTeam('${t._id}')"
+          class="text-green-400 underline">
+          Verify UPI
+        </button>
+
+        <button
+          onclick="markCash('${t._id}')"
+          class="text-yellow-400 underline">
+          Cash
+        </button>
+      `
+  }
+
+  <button
+    onclick="deleteTeam('${t._id}')"
+    class="text-red-400 underline ml-2">
+    Delete
+  </button>
+
+</td>
     `;
 
     tableBody.appendChild(tr);
@@ -77,6 +85,20 @@ window.markCash = async function (id) {
 
   const res = await apiFetch(`/api/admin/cash/${id}`, {
     method: "PUT",
+  });
+
+  const data = await res.json();
+  alert(data.message);
+
+  loadTeams();
+};
+window.deleteTeam = async function (id) {
+
+  if (!confirm("Are you sure you want to permanently delete this team? This cannot be undone.")) 
+    return;
+
+  const res = await apiFetch(`/api/admin/team/${id}`, {
+    method: "DELETE",
   });
 
   const data = await res.json();
