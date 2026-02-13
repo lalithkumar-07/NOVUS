@@ -100,6 +100,11 @@
   class="p-3 bg-black/40 rounded"/>
 <input id="leaderRoll" required placeholder="Roll Number"
   class="p-3 bg-black/40 rounded"/>
+<select id="leaderFood" required class="p-3 bg-black/40 rounded md:col-span-4">
+  <option value="">Food Preference</option>
+  <option value="veg">Veg</option>
+  <option value="nonveg">Non‑Veg</option>
+</select>
 
         </div>
       </div>
@@ -164,12 +169,19 @@
         </button>
       </div>
 
-      <div class="grid md:grid-cols-4 gap-4">
-        <input required placeholder="Name" class="p-3 bg-black/40 rounded"/>
-        <input required placeholder="Email" class="p-3 bg-black/40 rounded"/>
-        <input required placeholder="Phone" class="p-3 bg-black/40 rounded"/>
-        <input required placeholder="Roll Number" class="p-3 bg-black/40 rounded"/>
-      </div>
+      <div class="grid md:grid-cols-5 gap-4">
+  <input required placeholder="Name" class="p-3 bg-black/40 rounded"/>
+  <input required placeholder="Email" class="p-3 bg-black/40 rounded"/>
+  <input required placeholder="Phone" class="p-3 bg-black/40 rounded"/>
+  <input required placeholder="Roll Number" class="p-3 bg-black/40 rounded"/>
+
+  <select required class="p-3 bg-black/40 rounded">
+    <option value="">Food</option>
+    <option value="veg">Veg</option>
+    <option value="nonveg">Non‑Veg</option>
+  </select>
+</div>
+
     `;
 
     document.getElementById("members").appendChild(wrapper);
@@ -202,15 +214,19 @@
 
     const members = [];
 
-    document.querySelectorAll(".member-block").forEach(row => {
-      const inputs = row.querySelectorAll("input");
-      members.push({
-        name: inputs[0].value,
-        email: inputs[1].value,
-        phone: inputs[2].value,
-        roll: inputs[3].value
-      });
-    });
+   document.querySelectorAll(".member-block").forEach(row => {
+  const inputs = row.querySelectorAll("input");
+  const select = row.querySelector("select");
+
+  members.push({
+    name: inputs[0].value,
+    email: inputs[1].value,
+    phone: inputs[2].value,
+    roll: inputs[3].value,
+    food: select.value
+  });
+});
+
 
     const data = {
   teamName: teamName.value.trim(),
