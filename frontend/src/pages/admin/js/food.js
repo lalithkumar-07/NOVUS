@@ -1,4 +1,7 @@
 import { apiFetch } from "./api.js";
+if (!localStorage.getItem("adminToken")) {
+  location.href = "login.html";
+}
 
 const table = document.getElementById("foodTable");
 const totalsDiv = document.getElementById("totals");
