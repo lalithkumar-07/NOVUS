@@ -58,5 +58,10 @@ const teamSchema = new mongoose.Schema(
 },
 { timestamps: true }
 );
+// 🔒 Prevent duplicate registrations of same team
+teamSchema.index(
+  { teamName: 1, "leader.email": 1 },
+  { unique: true }
+);
 
 export default mongoose.model("Team", teamSchema);

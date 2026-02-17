@@ -3,25 +3,35 @@ import Team from "../models/Team.js";
 export const registerTeam = async (req, res) => {
   try {
 
-    console.log("📥 REGISTER BODY:", req.body);
+    const { teamName, leader, members } = req.body;
 
-    const {
-      teamName,
-      college,
-      department,
-      leader,
-      members
-    } = req.body;
-
-    // Calculate team size (leader + members)
+    // calculate size
     const teamSize = 1 + (members?.length || 0);
 
-    const team = await Team.create({
+    // check existing team
+    let team = await Team.findOne({
       teamName,
-      college,
-      department,
-      leader,
-      members,
+      "leader.email": leader.email
+    });
+
+    // 🔁 UPDATE existing team instead of duplicate
+    if (team) {
+      team.set({
+        ...req.body,
+        teamSize
+      });
+
+      await team.save();
+
+      return res.status(200).json({
+        message: "Team details updated",
+        team
+      });
+    }
+
+    // 🆕 CREATE only if new team
+    team = await Team.create({
+      ...req.body,
       teamSize
     });
 
@@ -32,12 +42,11 @@ export const registerTeam = async (req, res) => {
 
   } catch (err) {
 
+    // duplicate index protection
+    if (err.code === 11000)
+      return res.status(400).json({ message: "Team already registered" });
+
     console.error("❌ REGISTER ERROR:", err);
-
-    res.status(400).json({
-      message: err.message,
-      error: err
-    });
-
+    res.status(400).json({ message: err.message });
   }
 };

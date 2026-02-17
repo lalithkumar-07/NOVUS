@@ -9,7 +9,7 @@ const totalsDiv = document.getElementById("totals");
 async function loadFood() {
   const res = await apiFetch("/api/admin/food-report");
   const data = await res.json();
-
+  table.innerHTML = "";
   // totals
  document.getElementById("totalMembers").innerText = data.totals.totalMembers;
 document.getElementById("totalVeg").innerText = data.totals.totalVeg;

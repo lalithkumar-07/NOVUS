@@ -132,25 +132,39 @@ export const deleteTeam = async (req, res) => {
 =========================== */
 export const getFoodReport = async (req, res) => {
   try {
-    const teams = await Team.find();
+
+    // ✅ ONLY real teams (approved + paid)
+    const teams = await Team.find({
+      isApproved: true,
+      "payment.verified": true
+    }).lean();
+
+    // ✅ remove duplicate registrations of same team
+    const unique = {};
+    teams.forEach(t => {
+      const key = `${t.teamName}_${t.leader?.email}`;
+      unique[key] = t;   // keeps only latest copy
+    });
+
+    const cleanTeams = Object.values(unique);
 
     let totalMembers = 0;
     let totalVeg = 0;
     let totalNonVeg = 0;
 
-    const report = teams.map(t => {
+    const report = cleanTeams.map(t => {
 
       let veg = 0;
       let nonveg = 0;
 
       // leader
       if (t.leader?.food === "veg") veg++;
-      if (t.leader?.food === "nonveg") nonveg++;
+      else if (t.leader?.food === "nonveg") nonveg++;
 
       // members
-      t.members.forEach(m => {
+      (t.members || []).forEach(m => {
         if (m.food === "veg") veg++;
-        if (m.food === "nonveg") nonveg++;
+        else if (m.food === "nonveg") nonveg++;
       });
 
       const teamTotal = veg + nonveg;
@@ -169,11 +183,7 @@ export const getFoodReport = async (req, res) => {
     });
 
     res.json({
-      totals: {
-        totalMembers,
-        totalVeg,
-        totalNonVeg
-      },
+      totals: { totalMembers, totalVeg, totalNonVeg },
       teams: report
     });
 
