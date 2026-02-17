@@ -45,16 +45,20 @@ const teamSchema = new mongoose.Schema(
   },
 
   payment: {
-    upiId: { type: String, default: "" },
-    transactionId: { type: String, default: "" },
-    method: {
-      type: String,
-      enum: ["upi", "cash"],
-      default: "upi",
-    },
-    verified: { type: Boolean, default: false },
-    paidAt: Date
+  upiId: String,
+  transactionId: {
+    type: String,
+    unique: true,
+    sparse: true
   },
+  method: {
+    type: String,
+    enum: ["upi", "cash"]
+  },
+  verified: { type: Boolean, default: false },
+  paidAt: Date
+},
+
 },
 { timestamps: true }
 );
