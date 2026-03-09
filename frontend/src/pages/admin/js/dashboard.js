@@ -28,8 +28,8 @@ async function loadTeams() {
     tr.innerHTML = `
       <td>${t.teamName}</td>
       <td>${t.college}</td>
-      <td>${t.department}</td>
       <td>${t.leader?.name || "-"}</td>
+      <td>${t.leader?.phone || "-"}</td>
       <td>${paid ? "✅ Paid" : "❌ Pending"}</td>
       <td>${t.payment?.transactionId || "-"}</td>
       <td>${t.payment?.method || "-"}</td>
