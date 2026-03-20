@@ -72,7 +72,7 @@ The database is structured to represent team-based registrations. Each document 
 }
 
 
-Installation and Setup
+## Installation and Setup
 To set up the project locally, begin by cloning the repository from GitHub. After cloning, navigate to the project directory and install the required dependencies using npm.
 
 A .env file must be created in the root directory to securely store environment variables such as the MongoDB connection string and email credentials. These values should not be hardcoded in the source code to ensure security.
@@ -81,32 +81,32 @@ Once the environment variables are configured, the application can be started us
 
 
 
-Data Management and Export
+## Data Management and Export
 The platform allows organizers to export registration data from MongoDB into CSV format. This feature is essential for managing participants outside the application, including tasks such as filtering verified teams, preparing attendance sheets, and generating certificates.
 
 The exported data can be opened in spreadsheet tools and further processed according to event requirements. This functionality significantly reduces manual effort and improves operational efficiency.
 
 
-Security Considerations
+## Security Considerations
 Sensitive information such as database credentials, API keys, and email passwords are stored securely using environment variables. The .env file is excluded from version control using .gitignore to prevent accidental exposure.
 
 If any credentials were previously exposed, it is recommended to regenerate them immediately and update the environment configuration. Proper handling of secrets is critical when making the repository public.
 
 
-Future Enhancements
+## Future Enhancements
 The project can be further improved by introducing an administrative dashboard for real-time monitoring and management of registrations. Additional features such as authentication, role-based access control, and automated certificate generation can enhance functionality.
 
 Integration with payment gateways and real-time analytics can also be considered for future versions. These enhancements would make the platform more robust and suitable for larger-scale events.
 
 
-Conclusion
+## Conclusion
 The NOVUS Hackathon Registration Portal successfully addressed the challenges of managing large-scale hackathon registrations. It provided a structured, efficient, and scalable solution that supported both pre-event and post-event workflows.
 
 The system demonstrates practical application of full-stack development concepts and showcases how technology can simplify event management processes. It serves as a strong foundation for future improvements and similar event-based platforms.
 
 
 
-Contact
+## Contact
 For any queries or collaboration opportunities, please contact:
 
 nanamlalithkumar@gmail.com
