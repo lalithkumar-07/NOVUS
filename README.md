@@ -71,6 +71,7 @@ The database is structured to represent team-based registrations. Each document 
   "isApproved": true
 }
 
+```
 
 ## Installation and Setup
 To set up the project locally, begin by cloning the repository from GitHub. After cloning, navigate to the project directory and install the required dependencies using npm.
