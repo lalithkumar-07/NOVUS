@@ -4,3 +4,4 @@ npm init -y
 npm install express mongoose cors dotenv json2csv
 npm install mongoose dotenv cors express jsonwebtoken bcryptjs multer
 npm install nodemon --save-dev
+npm install dotenv

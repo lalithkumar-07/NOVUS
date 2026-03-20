@@ -20,14 +20,14 @@ const app = express();
 
 // CORS — allow frontend domain later
 const allowedOrigins = [
-  "http://localhost:5500",
-  "http://127.0.0.1:5500",
-  "http://localhost:3000",
-  "http://127.0.0.1:3000",  
-  "https://thenovus.site",
-  "https://www.thenovus.site",
+  // "http://localhost:5500",
+  // "http://127.0.0.1:5500",
+  // "http://localhost:3000",
+  // "http://127.0.0.1:3000",  
+  // "domain",
+  // "domain",
 
-  "https://novus-ivory.vercel.app"
+  // "domain"
 ];
 
 app.use(
@@ -90,7 +90,7 @@ if (!exists) {
 
   await Admin.create({
     username: "admin",
-    password: "trigun2212",
+    password: "your_password_here" // CHANGE THIS BEFORE DEPLOYMENT,
   });
 
   console.log("✅ Admin created");

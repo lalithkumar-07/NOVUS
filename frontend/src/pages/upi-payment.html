@@ -64,7 +64,7 @@ tailwind.config = {
 
 <!-- ================= PAGE ================= -->
 
-<!-- <main class="pt-32 step-animate">
+<main class="pt-32 step-animate">
 
 <section class="max-w-5xl mx-auto px-6 pb-24">
 
@@ -76,25 +76,25 @@ UPI Payment Confirmation
 
 <!-- QR SIDE -->
 
-<!-- <div class="bg-white/5 p-8 rounded-xl text-center">
+ <div class="bg-white/5 p-8 rounded-xl text-center">
 
   <h3 class="text-lg font-semibold mb-4">
     Scan & Pay 
   </h3>
 
   <img
-  id="qrImg"
+  id=""
   class="mx-auto w-64 rounded-xl border"/>
 
   <p class="text-xs text-gray-400 mt-4">
-    Pay ₹1700 and submit the details.
+    Pay ₹amt and submit the details.
   </p>
 
-</div> -->
+</div>
 
 <!-- FORM SIDE -->
 
-<!-- <div class="bg-white/5 p-8 rounded-xl">
+<div class="bg-white/5 p-8 rounded-xl">
 
 <form id="upiForm" class="space-y-6">
 
@@ -138,7 +138,7 @@ UPI Payment Confirmation
 </div>
 </section>
 
-</main> -->
+</main>
 
 <!-- ================= JS ================= -->
 
@@ -148,8 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const API_BASE =
   window.location.hostname === "localhost"
-    ? "http://localhost:5000"
-    : "https://novus-7h23.onrender.com";
+    // ? "http://localhost:5000"
+    // : "backend_server";
 
 const qr = document.getElementById("qrImg");
 
